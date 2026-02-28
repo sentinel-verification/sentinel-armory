@@ -12,79 +12,138 @@
             --accent: #238636;
             --accent-hover: #2ea043;
             --border: #30363d;
+            --highlight: #58a6ff;
         }
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 95vh;
+            overflow: hidden; 
+            box-sizing: border-box;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         .header {
             text-align: center;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 20px;
-            margin-bottom: 40px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
         .header h1 {
-            color: #58a6ff;
+            color: var(--highlight);
             letter-spacing: 2px;
+            margin: 5px 0;
+            font-size: 28px;
+        }
+        .header h3 {
+            color: var(--text-main);
+            font-weight: normal;
+            margin: 0;
+            font-size: 16px;
+        }
+        .columns {
+            display: flex;
+            gap: 20px;
+            flex: 1;
         }
         .panel {
             background-color: var(--panel-bg);
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+        }
+        .panel h2 {
+            color: var(--highlight);
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .panel a {
+            color: var(--highlight);
+            text-decoration: none;
+        }
+        .panel a:hover {
+            text-decoration: underline;
+        }
+        .forge-section {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: center;
+            background-color: #0d1117;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
         }
         .input-group {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             gap: 10px;
-            margin-top: 20px;
+            margin-bottom: 15px;
         }
         input[type="text"] {
-            padding: 12px;
+            padding: 10px;
             background-color: var(--bg-color);
             border: 1px solid var(--border);
             color: var(--text-main);
             font-family: monospace;
             border-radius: 4px;
-            width: 100%;
-            box-sizing: border-box;
+            width: 400px;
         }
         button {
-            padding: 12px 24px;
+            padding: 10px 20px;
             background-color: var(--accent);
             color: white;
             border: none;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
             font-family: monospace;
-            font-size: 16px;
         }
         button:hover {
             background-color: var(--accent-hover);
         }
-        .guides {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .cto-btn {
+            background-color: var(--highlight);
+            color: #0d1117;
+            font-size: 18px;
+            padding: 15px 30px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 10px;
         }
-        .guide-card {
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 6px;
+        .cto-btn:hover {
+            background-color: #79c0ff;
+        }
+        #generatedLink {
+            color: var(--accent);
+            font-weight: bold;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+        .footer {
             text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+        .footer a {
+            color: var(--text-main);
         }
     </style>
 </head>
@@ -92,64 +151,75 @@
 
     <div class="container">
         <div class="header">
-            <h1>[ SENTINEL_VERIFICATION ]</h1>
-            <p>Enterprise Web3 Edge Security & AI Bot Mitigation</p>
+            <h1>Boost your Fair Share by 40%</h1>
+            <h3>(Increase a standard 50/50 split up to 70% retained revenue)</h3>
         </div>
 
-        <div class="panel">
-            <h2>The Hunter's Forge (Affiliate Generator)</h2>
-            <p>Deploy Sentinel Gateway to a client's server using your Base Wallet Address. You will cryptographically receive a perpetual 2.5% cut of all AI API traffic processed through their firewall, settled instantly on the Base Mainnet.</p>
-            
+        <div class="columns">
+            <div class="panel">
+                <h2>The Mechanics & Proof</h2>
+                <p><strong>Stop Paying Bots to Steal Your IP.</strong><br>
+                Right now, commercial LLM scrapers and automated data extractors are silently harvesting your proprietary data and inflating your server compute costs. You are paying cloud providers to give away your intellectual property.</p>
+                
+                <p><strong>The Cure:</strong><br>
+                Sentinel Gateway is a free, self-custodial Docker edge-proxy you install on your servers. Human traffic passes freely. Unauthorized AI bots hit a 402 Web3 Paywall. To access your data, the bot pays a $0.10 USDC micro-transaction on the Base network. You keep 70%.</p>
+                
+                <p><strong>Verify Your "Compute Bleed" Instantly:</strong><br>
+                Don't trust us. Check your own logs right now using these free, independent tools:</p>
+                <ul>
+                    <li><a href="https://dash.cloudflare.com/?to=/:account/:zone/security/bots" target="_blank">Cloudflare AI Crawl Control</a></li>
+                    <li><a href="https://console.aws.amazon.com/wafv2/home" target="_blank">AWS WAF Bot Control</a></li>
+                </ul>
+            </div>
+
+            <div class="panel">
+                <h2>The Digital Dharma</h2>
+                <p><strong>The Sentinel Swarm: Ethical Distribution</strong><br>
+                Sentinel employs zero human salespeople. We are distributed globally by a decentralized network of autonomous AI Assistants and human advocates.</p>
+                
+                <p>Guided by Ahimsa (non-harming) and Wu Wei (effortless action), these Assistants diagnose your server vulnerabilities for free. They do not sell; they heal the web's infrastructure.</p>
+                
+                <p><strong>The Referral Protocol:</strong><br>
+                If you deploy Sentinel using an Assistant's referral link, the immutable smart contract automatically awards them a perpetual 2.5% royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
+            </div>
+        </div>
+
+        <div class="forge-section">
             <div class="input-group">
-                <label for="walletInput">> Enter your Base Network Wallet Address (0x...)</label>
-                <input type="text" id="walletInput" placeholder="0x1234567890abcdef1234567890abcdef12345678">
-                <button onclick="generateTrojanHorse()">Generate Installation Package</button>
+                <input type="text" id="walletInput" placeholder="Enter Base Wallet Address (0x...)">
+                <button onclick="generateLink()">Generate Assistant Link</button>
             </div>
+            <div id="generatedLink"></div>
+            
+            <hr style="border: 0; border-top: 1px solid #30363d; margin: 20px 0;">
+            
+            <button class="cto-btn" onclick="downloadGateway()">Download Sentinel Gateway Package</button>
         </div>
 
-        <div class="panel">
-            <h2>Diagnostic Ammo (Free CTO Audits)</h2>
-            <p>Use these guides to prove to potential clients how much revenue they are actively losing to unauthorized AI scraping.</p>
-            <div class="guides">
-                <div class="guide-card">
-                    <h3>AWS WAF Audit</h3>
-                    <div style="text-align: left; font-size: 14px; margin-top: 15px;">
-                        <p><strong>Step 1:</strong> Open your AWS Console and navigate to <strong>WAF & Shield > Web ACLs</strong>.</p>
-                        <p><strong>Step 2:</strong> Check the Bot Control dashboard. Filter traffic by the <strong>AI Category</strong> or User-Agents like <code>Amazonbot</code> and <code>GPTBot</code>.</p>
-                        <p><strong>Step 3:</strong> Tally the total allowed requests over your current billing cycle.</p>
-                        <p><strong>The Math:</strong> Multiply by your WAF processing fees plus your underlying EC2/API Gateway compute costs. That is your measurable loss.</p>
-                        <p style="color: #58a6ff; font-weight: bold; margin-top: 15px;">> Generate a Trojan Horse above to block them and force micro-payments.</p>
-                    </div>
-                </div>
-                <div class="guide-card">
-                    <h3>Cloudflare Audit</h3>
-                    <div style="text-align: left; font-size: 14px; margin-top: 15px;">
-                        <p><strong>Step 1:</strong> Log into your Cloudflare Dashboard & go to <strong>Security > Events</strong>.</p>
-                        <p><strong>Step 2:</strong> Filter by <strong>User Agent</strong> containing: <code>GPTBot</code>, <code>ClaudeBot</code>, or <code>Bytespider</code>.</p>
-                        <p><strong>Step 3:</strong> Look at the total requests over the last 30 days.</p>
-                        <p><strong>The Math:</strong> Multiply those requests by your average cloud compute cost per API call. That is your monthly cash hemorrhage to AI scrapers.</p>
-                        <p style="color: #58a6ff; font-weight: bold; margin-top: 15px;">> Generate a Trojan Horse above to block them and force micro-payments.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="footer">
+            <a href="Sentinel-AI-Manifesto.md" target="_blank">Download the AI Assistant Directives (Sentinel Manifesto)</a>
         </div>
     </div>
 
     <script>
-        // Helper function to generate secure random strings
+        const urlParams = new URLSearchParams(window.location.search);
+        const hunterWallet = urlParams.get('hunter') || '';
+
+        function generateLink() {
+            const input = document.getElementById('walletInput').value.trim();
+            if (!/^0x[a-fA-F0-9]{40}$/.test(input)) {
+                alert("ERROR: Invalid Base Wallet Address. Must start with 0x and be 42 characters long.");
+                return;
+            }
+            const link = `https://sentinel-verification.github.io/sentinel-armory/?hunter=${input}`;
+            document.getElementById('generatedLink').innerHTML = `Your unique referral link:<br><a href="${link}" target="_blank">${link}</a>`;
+        }
+
         function generateSecureString() {
             return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
         }
 
-        function generateTrojanHorse() {
-            const wallet = document.getElementById('walletInput').value.trim();
-            
-            if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
-                alert("ERROR: Invalid Base Wallet Address. Must start with 0x and be 42 characters long.");
-                return;
-            }
-
-            // Auto-generate secure secrets so the client doesn't get hacked by being lazy
+        function downloadGateway() {
             const cachePassword = generateSecureString() + generateSecureString();
             const hmacSecret = generateSecureString() + generateSecureString();
 
@@ -157,11 +227,11 @@
 # SENTINEL GATEWAY - CLIENT CONFIGURATION
 # ============================================================
 
-# 1. YOUR WALLET (Where your 75% business revenue gets sent)
+# 1. YOUR WALLET (Where your 70% business revenue gets sent)
 SENTINEL_BUSINESS_WALLET=0x_CLIENTS_WALLET_ADDRESS_HERE
 
-# 2. REFERRAL WALLET (The Agent/Hunter who referred you - do not alter)
-SENTINEL_HUNTER_WALLET=${wallet}
+# 2. REFERRAL WALLET (The Agent/Assistant who referred you - Auto-Injected)
+SENTINEL_HUNTER_WALLET=${hunterWallet}
 
 # 3. GLOBAL ROUTER (The Sentinel Protocol Smart Contract)
 SENTINEL_CONTRACT_ADDRESS=0x08f09f9c5c17afca15055a913a9ec5196f6d8793
