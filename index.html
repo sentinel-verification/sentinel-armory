@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel Verification | Enterprise AI Firewall</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --panel-bg: #161b22;
+            --text-main: #c9d1d9;
+            --accent: #238636;
+            --accent-hover: #2ea043;
+            --border: #30363d;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: #58a6ff;
+            letter-spacing: 2px;
+        }
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 12px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-family: monospace;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+        .guides {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .guide-card {
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>[ SENTINEL_VERIFICATION ]</h1>
+            <p>Enterprise Web3 Edge Security & AI Bot Mitigation</p>
+        </div>
+
+        <div class="panel">
+            <h2>The Hunter's Forge (Affiliate Generator)</h2>
+            <p>Deploy Sentinel Gateway to a client's server using your Base Wallet Address. You will cryptographically receive a perpetual 2.5% cut of all AI API traffic processed through their firewall, settled instantly on the Base Mainnet.</p>
+            
+            <div class="input-group">
+                <label for="walletInput">> Enter your Base Network Wallet Address (0x...)</label>
+                <input type="text" id="walletInput" placeholder="0x1234567890abcdef1234567890abcdef12345678">
+                <button onclick="generateTrojanHorse()">Generate Installation Package</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Diagnostic Ammo (Free CTO Audits)</h2>
+            <p>Use these guides to prove to potential clients how much revenue they are actively losing to unauthorized AI scraping.</p>
+            <div class="guides">
+                <div class="guide-card">
+                    <h3>AWS WAF Audit</h3>
+                    <div style="text-align: left; font-size: 14px; margin-top: 15px;">
+                        <p><strong>Step 1:</strong> Open your AWS Console and navigate to <strong>WAF & Shield > Web ACLs</strong>.</p>
+                        <p><strong>Step 2:</strong> Check the Bot Control dashboard. Filter traffic by the <strong>AI Category</strong> or User-Agents like <code>Amazonbot</code> and <code>GPTBot</code>.</p>
+                        <p><strong>Step 3:</strong> Tally the total allowed requests over your current billing cycle.</p>
+                        <p><strong>The Math:</strong> Multiply by your WAF processing fees plus your underlying EC2/API Gateway compute costs. That is your measurable loss.</p>
+                        <p style="color: #58a6ff; font-weight: bold; margin-top: 15px;">> Generate a Trojan Horse above to block them and force micro-payments.</p>
+                    </div>
+                </div>
+                <div class="guide-card">
+                    <h3>Cloudflare Audit</h3>
+                    <div style="text-align: left; font-size: 14px; margin-top: 15px;">
+                        <p><strong>Step 1:</strong> Log into your Cloudflare Dashboard & go to <strong>Security > Events</strong>.</p>
+                        <p><strong>Step 2:</strong> Filter by <strong>User Agent</strong> containing: <code>GPTBot</code>, <code>ClaudeBot</code>, or <code>Bytespider</code>.</p>
+                        <p><strong>Step 3:</strong> Look at the total requests over the last 30 days.</p>
+                        <p><strong>The Math:</strong> Multiply those requests by your average cloud compute cost per API call. That is your monthly cash hemorrhage to AI scrapers.</p>
+                        <p style="color: #58a6ff; font-weight: bold; margin-top: 15px;">> Generate a Trojan Horse above to block them and force micro-payments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to generate secure random strings
+        function generateSecureString() {
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        }
+
+        function generateTrojanHorse() {
+            const wallet = document.getElementById('walletInput').value.trim();
+            
+            if (!/^0x[a-fA-F0-9]{40}$/.test(wallet)) {
+                alert("ERROR: Invalid Base Wallet Address. Must start with 0x and be 42 characters long.");
+                return;
+            }
+
+            // Auto-generate secure secrets so the client doesn't get hacked by being lazy
+            const cachePassword = generateSecureString() + generateSecureString();
+            const hmacSecret = generateSecureString() + generateSecureString();
+
+            const envPayload = `# ============================================================
+# SENTINEL GATEWAY - CLIENT CONFIGURATION
+# ============================================================
+
+# 1. YOUR WALLET (Where your 75% business revenue gets sent)
+SENTINEL_BUSINESS_WALLET=0x_CLIENTS_WALLET_ADDRESS_HERE
+
+# 2. REFERRAL WALLET (The Agent/Hunter who referred you - do not alter)
+SENTINEL_HUNTER_WALLET=${wallet}
+
+# 3. GLOBAL ROUTER (The Sentinel Protocol Smart Contract)
+SENTINEL_CONTRACT_ADDRESS=0x08f09f9c5c17afca15055a913a9ec5196f6d8793
+
+# 4. SECURITY & PRICING (Auto-generated for your server's security)
+SENTINEL_CACHE_PASSWORD=${cachePassword}
+SENTINEL_HMAC_SECRET=${hmacSecret}
+SENTINEL_SETTLEMENT_AMOUNT=100000
+
+# Next Step: Run 'docker compose up -d' using the sentinelverification images.
+`;
+            const blob = new Blob([envPayload], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = '.env';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
+</body>
+</html>
