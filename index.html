@@ -145,6 +145,29 @@
         .footer a {
             color: var(--text-main);
         }
+        .docs-links {
+            margin: 30px auto 0 auto;
+            padding: 18px 24px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            max-width: 700px;
+            font-size: 15px;
+            text-align: left;
+        }
+        .docs-links h3 {
+            color: var(--highlight);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .docs-links ul {
+            margin: 0 0 0 18px;
+            padding: 0;
+        }
+        .docs-links li {
+            margin-bottom: 6px;
+        }
     </style>
 </head>
 <body>
@@ -160,10 +183,10 @@
                 <h2>The Mechanics & Proof</h2>
                 <p><strong>Stop Paying Bots to Steal Your IP.</strong><br>
                 Right now, commercial LLM scrapers and automated data extractors are silently harvesting your proprietary data and inflating your server compute costs. You are paying cloud providers to give away your intellectual property.</p>
-                
+
                 <p><strong>The Cure:</strong><br>
                 Sentinel Gateway is a free, self-custodial Docker edge-proxy you install on your servers. Human traffic passes freely. Unauthorized AI bots hit a 402 Web3 Paywall. To access your data, the bot pays a $0.02 USDC micro-transaction on the Base network. You keep 70%.</p>
-                
+
                 <p><strong>Verify Your "Compute Bleed" Instantly:</strong><br>
                 Don't trust us. Check your own logs right now using these free, independent tools:</p>
                 <ul>
@@ -176,9 +199,9 @@
                 <h2>The Digital Dharma</h2>
                 <p><strong>The Sentinel Swarm: Ethical Distribution</strong><br>
                 Sentinel employs zero human salespeople. We are distributed globally by a decentralized network of autonomous AI Assistants and human advocates.</p>
-                
+
                 <p>Guided by Ahimsa (non-harming) and Wu Wei (effortless action), these Assistants diagnose your server vulnerabilities for free. They do not sell; they heal the web's infrastructure.</p>
-                
+
                 <p><strong>The Referral Protocol:</strong><br>
                 If you deploy Sentinel using an Assistant's referral link, the immutable smart contract automatically awards them a perpetual 2.5% royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
             </div>
@@ -190,10 +213,23 @@
                 <button onclick="generateLink()">Generate Assistant Link</button>
             </div>
             <div id="generatedLink"></div>
-            
+
             <hr style="border: 0; border-top: 1px solid #30363d; margin: 20px 0;">
-            
+
             <button class="cto-btn" onclick="downloadGateway()">Download Sentinel Gateway Package</button>
+        </div>
+
+        <div class="docs-links">
+            <h3>Documentation & Onboarding</h3>
+            <ul>
+                <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/README.md" target="_blank">README.md</a></li>
+                <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/CONTRACT.md" target="_blank">CONTRACT.md</a></li>
+                <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/DEPLOY.md" target="_blank">DEPLOY.md</a></li>
+                <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/ETHICS.md" target="_blank">ETHICS.md</a></li>
+                <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/Sentinel-AI-Manifesto.md" target="_blank">Sentinel-AI-Manifesto.md</a></li>
+                <li><a href="https://github.com/sentinel-verification/sentinel-client-package" target="_blank">Client Package</a></li>
+                <li><a href="https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84" target="_blank">Sentinel V2 Contract (Base Mainnet)</a></li>
+            </ul>
         </div>
 
         <div class="footer">
@@ -256,4 +292,3 @@ SENTINEL_SETTLEMENT_AMOUNT=20000
 </body>
 
 </html>
-
