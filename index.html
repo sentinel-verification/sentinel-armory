@@ -295,8 +295,9 @@
 
     <script>
         // --- WEB3 CONFIGURATION ---
-        const CONTRACT_ADDRESS = '0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84'; // Mainnet Router/Registry
+        const CONTRACT_ADDRESS = '0x589597883413F99b9f9AC828D98327225E1eF79D'; // Live Base Mainnet Registry
         const CHAIN_ID = 8453; // Base Mainnet
+        const COMPANY_ADDRESS = '0x21dFFAd5D2884DA68AD2e9BA866Bf6CA3A815604'; // Your Master Address
 
         // Minimal ABI for the Registry functions we need
         const ABI = [
@@ -364,17 +365,44 @@
             }
         }
 
-        // 2. Hunter Flow: Create Referral
+        // 2. Hunter Flow: Create Referral (With EIP-712 Signature)
         async function createReferral() {
             try {
-                // Generate a random 32-byte hash for the new referral ID
                 const randomStr = "SENTINEL_" + userAddress + Date.now();
                 const newReferralId = ethers.utils.id(randomStr); 
                 
-                updateStatus('Please confirm the transaction in MetaMask to lock your referral ID to the blockchain...');
+                updateStatus('Please sign the secure message in MetaMask to verify your identity...');
+
+                // EIP-712 Domain
+                const domain = {
+                    name: "SentinelEconomyReferralRegistry",
+                    version: "1.0",
+                    chainId: CHAIN_ID,
+                    verifyingContract: CONTRACT_ADDRESS
+                };
+
+                // EIP-712 Types for Create
+                const types = {
+                    CreateReferral: [
+                        { name: "referralId", type: "bytes32" },
+                        { name: "company", type: "address" },
+                        { name: "referrer", type: "address" }
+                    ]
+                };
+
+                // EIP-712 Message
+                const message = {
+                    referralId: newReferralId,
+                    company: COMPANY_ADDRESS,
+                    referrer: userAddress
+                };
+
+                // 1. Sign Data
+                const signature = await signer._signTypedData(domain, types, message);
+                updateStatus('Signature secured! Please confirm the blockchain transaction in MetaMask...');
                 
-                // Call contract (Passing "0x" as dummy signature for MVP)
-                const tx = await contract.createReferral(newReferralId, userAddress, "0x");
+                // 2. Call contract with real signature
+                const tx = await contract.createReferral(newReferralId, userAddress, signature);
                 updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
                 
                 await tx.wait();
@@ -390,12 +418,39 @@
             }
         }
 
-        // 3. Business Flow: Claim Referral & Download
+        // 3. Business Flow: Claim Referral & Download (With EIP-712 Signature)
         async function claimReferral() {
             try {
-                updateStatus('Please confirm the transaction in MetaMask to lock your server to this Agent...');
+                updateStatus('Please sign the secure message in MetaMask to verify server ownership...');
                 
-                const tx = await contract.claimReferral(referralIdFromUrl, userAddress, "0x");
+                // EIP-712 Domain
+                const domain = {
+                    name: "SentinelEconomyReferralRegistry",
+                    version: "1.0",
+                    chainId: CHAIN_ID,
+                    verifyingContract: CONTRACT_ADDRESS
+                };
+
+                // EIP-712 Types for Claim
+                const types = {
+                    ClaimReferral: [
+                        { name: "referralId", type: "bytes32" },
+                        { name: "business", type: "address" }
+                    ]
+                };
+
+                // EIP-712 Message
+                const message = {
+                    referralId: referralIdFromUrl,
+                    business: userAddress
+                };
+
+                // 1. Sign Data
+                const signature = await signer._signTypedData(domain, types, message);
+                updateStatus('Signature secured! Please confirm the blockchain transaction in MetaMask...');
+                
+                // 2. Call contract with real signature
+                const tx = await contract.claimReferral(referralIdFromUrl, userAddress, signature);
                 updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
                 
                 await tx.wait();
