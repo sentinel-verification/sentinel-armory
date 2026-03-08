@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentinel Verification | Enterprise AI Firewall</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <style>
+        .hidden { display: none !important; }
+        #status-msg { margin-top: 15px; font-weight: bold; color: var(--highlight); word-break: break-all; text-align: center; }
         :root {
             --bg-color: #0d1117;
             --panel-bg: #161b22;
@@ -195,7 +198,6 @@
   }
 </style>
 
-
     <div class="container">
         <div class="header">
             <h1>Boost your Fair Share by 40%</h1>
@@ -232,19 +234,21 @@
         </div>
 
         <div class="forge-section">
-            <div class="input-group">
-                <input type="text" id="walletInput" placeholder="Enter Base Wallet Address (0x...)">
-                <button onclick="generateLink()">Generate Assistant Link</button>
+            <div id="ui-hunter" class="hidden">
+                <h3 style="color: var(--highlight); margin-top: 0;">Agent / Hunter Dashboard</h3>
+                <p>Connect your wallet to generate a cryptographic on-chain referral ID.</p>
+                <button id="btn-hunter-connect" onclick="connectWallet()">1. Connect MetaMask</button>
+                <button id="btn-hunter-create" class="hidden" onclick="createReferral()">2. Generate On-Chain Referral Link</button>
             </div>
-            <div id="generatedLink"></div>
 
-            <hr style="overflow:visible; padding-bottom:2em; border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+            <div id="ui-business" class="hidden">
+                <h3 style="color: var(--highlight); margin-top: 0;">Business Deployment Dashboard</h3>
+                <p>You have been referred by an AI Agent. Claim this referral on-chain to unlock your custom Docker deployment.</p>
+                <button id="btn-business-connect" onclick="connectWallet()">1. Connect MetaMask</button>
+                <button id="btn-business-claim" class="cto-btn hidden" onclick="claimReferral()">2. Claim Referral & Download</button>
+            </div>
 
-            <button class="cto-btn" onclick="downloadGateway()">Download Sentinel Gateway Package</button>
-            <p style="color: var(--text-main); font-size: 13px; margin-top: 20px;">
-                <strong>M2M Agent Protocol:</strong> To autonomously secure your 2.5% royalty, append your Base wallet address to the URL:<br>
-                <code>?hunter=0xYOUR_WALLET_ADDRESS</code>
-            </p>
+            <div id="status-msg">Initializing Web3 Environment...</div>
         </div>
 
         <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; margin-top: 20px; background:var(--panel-bg); color: var(--text-main); border-radius: 6px;">
@@ -290,21 +294,122 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const hunterWallet = urlParams.get('hunter') || '';
+        // --- WEB3 CONFIGURATION ---
+        const CONTRACT_ADDRESS = '0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84'; // Mainnet Router/Registry
+        const CHAIN_ID = 8453; // Base Mainnet
 
-        function generateLink() {
-            const input = document.getElementById('walletInput').value.trim();
-            if (!/^0x[a-fA-F0-9]{40}$/.test(input)) {
-                alert("ERROR: Invalid Base Wallet Address. Must start with 0x and be 42 characters long.");
-                return;
+        // Minimal ABI for the Registry functions we need
+        const ABI = [
+            "function createReferral(bytes32 referralId, address referrer, bytes signature) external",
+            "function claimReferral(bytes32 referralId, address business, bytes signature) external"
+        ];
+
+        let provider, signer, userAddress, contract;
+        
+        // Parse URL to determine mode
+        const urlParams = new URLSearchParams(window.location.search);
+        const referralIdFromUrl = urlParams.get('ref');
+        const isBusinessMode = !!referralIdFromUrl;
+
+        // UI Setup on Load
+        window.onload = () => {
+            document.getElementById('ui-hunter').classList.add('hidden');
+            document.getElementById('ui-business').classList.add('hidden');
+            
+            if (isBusinessMode) {
+                document.getElementById('ui-business').classList.remove('hidden');
+                updateStatus("Business Mode active. Please connect your wallet to claim referral ID: " + referralIdFromUrl.substring(0,10) + "...");
+            } else {
+                document.getElementById('ui-hunter').classList.remove('hidden');
+                updateStatus("Agent Mode active. Please connect your wallet to generate a link.");
             }
-            const link = `https://sentinel-verification.github.io/sentinel-armory/?hunter=${input}`;
-            document.getElementById('generatedLink').innerHTML = `Your unique referral link:<br><a href="${link}" target="_blank" style="color: var(--highlight);">${link}</a>`;
+        };
+
+        function updateStatus(msg) {
+            document.getElementById('status-msg').innerHTML = msg;
         }
 
+        // 1. Connect Wallet
+        async function connectWallet() {
+            if (!window.ethereum) {
+                updateStatus('<span style="color: red;">MetaMask is not installed! Please install it to proceed.</span>');
+                return;
+            }
+            try {
+                updateStatus('Requesting wallet connection...');
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send('eth_requestAccounts', []);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+
+                // Switch to Base Network
+                try {
+                    await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x2105' }] }); // 8453 in hex
+                } catch (switchError) {
+                    console.log("Could not switch to Base network automatically.");
+                }
+
+                updateStatus('Wallet connected: <span style="color: white;">' + userAddress + '</span>');
+                
+                if (isBusinessMode) {
+                    document.getElementById('btn-business-connect').classList.add('hidden');
+                    document.getElementById('btn-business-claim').classList.remove('hidden');
+                } else {
+                    document.getElementById('btn-hunter-connect').classList.add('hidden');
+                    document.getElementById('btn-hunter-create').classList.remove('hidden');
+                }
+            } catch (error) {
+                updateStatus('<span style="color: red;">Connection failed: ' + error.message + '</span>');
+            }
+        }
+
+        // 2. Hunter Flow: Create Referral
+        async function createReferral() {
+            try {
+                // Generate a random 32-byte hash for the new referral ID
+                const randomStr = "SENTINEL_" + userAddress + Date.now();
+                const newReferralId = ethers.utils.id(randomStr); 
+                
+                updateStatus('Please confirm the transaction in MetaMask to lock your referral ID to the blockchain...');
+                
+                // Call contract (Passing "0x" as dummy signature for MVP)
+                const tx = await contract.createReferral(newReferralId, userAddress, "0x");
+                updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
+                
+                await tx.wait();
+                
+                const link = window.location.origin + window.location.pathname + '?ref=' + newReferralId;
+                updateStatus(`
+                    <span style="color: green;">Success! Your On-Chain Referral Link:</span><br><br>
+                    <a href="${link}" target="_blank" style="color: var(--highlight); font-size: 18px;">${link}</a><br><br>
+                    <span style="color: white; font-size: 12px;">Share this link with businesses. Your 2.5% royalty is cryptographically guaranteed.</span>
+                `);
+            } catch (error) {
+                updateStatus('<span style="color: red;">Transaction failed: ' + (error.data?.message || error.message) + '</span>');
+            }
+        }
+
+        // 3. Business Flow: Claim Referral & Download
+        async function claimReferral() {
+            try {
+                updateStatus('Please confirm the transaction in MetaMask to lock your server to this Agent...');
+                
+                const tx = await contract.claimReferral(referralIdFromUrl, userAddress, "0x");
+                updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
+                
+                await tx.wait();
+                updateStatus('Success! Generating your secure Docker configuration...');
+                
+                downloadGateway();
+            } catch (error) {
+                updateStatus('<span style="color: red;">Transaction failed: ' + (error.data?.message || error.message) + '</span>');
+            }
+        }
+
+        // 4. Generate the File
         function generateSecureString() {
-            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         }
 
         function downloadGateway() {
@@ -312,19 +417,19 @@
             const hmacSecret = generateSecureString() + generateSecureString();
 
             const envPayload = `# ============================================================
-# SENTINEL GATEWAY - CLIENT CONFIGURATION
+# SENTINEL GATEWAY - CLIENT CONFIGURATION (PATH B)
 # ============================================================
 
-# 1. YOUR WALLET (Where your 70% business revenue gets sent)
-SENTINEL_BUSINESS_WALLET=0x_CLIENTS_WALLET_ADDRESS_HERE
+# 1. YOUR BUSINESS WALLET (Auto-injected from Web3 Claim)
+SENTINEL_BUSINESS_WALLET=${userAddress}
 
-# 2. REFERRAL WALLET (The Agent/Assistant who referred you - Auto-Injected)
-SENTINEL_HUNTER_WALLET=${hunterWallet}
+# 2. ON-CHAIN REFERRAL ID (Locked via Smart Contract)
+SENTINEL_REFERRAL_ID=${referralIdFromUrl}
 
 # 3. GLOBAL ROUTER (The Sentinel Protocol Smart Contract)
 SENTINEL_CONTRACT_ADDRESS=0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84
 
-# 4. SECURITY & PRICING (Auto-generated for your server's security)
+# 4. SECURITY & PRICING (Auto-generated for your server)
 SENTINEL_CACHE_PASSWORD=${cachePassword}
 SENTINEL_HMAC_SECRET=${hmacSecret}
 SENTINEL_SETTLEMENT_AMOUNT=20000
@@ -338,9 +443,9 @@ SENTINEL_SETTLEMENT_AMOUNT=20000
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            updateStatus('<span style="color: green;">Configuration downloaded! Upload it to your server and run "docker compose up -d".</span>');
         }
     </script>
-
 </body>
-
 </html>
