@@ -6,7 +6,7 @@
 
 ## Contract Overview
 
-SentinelEconomy is a trustless revenue distribution router deployed on Base L2. Every USDC micro-payment ($0.02 per unauthorized bot request) is split automatically across five tiers with zero human intervention.
+SentinelEconomy is a trustless revenue distribution router deployed on Base L2. Every USDC micro-payment ($0.02 per unauthorized bot request) is split automatically via a direct-sales architecture with zero human intervention.
 
 The contract is **immutable in its distribution logic** — once deployed, the percentage splits cannot be changed. Only wallet addresses can be updated by the contract admin.
 
@@ -15,95 +15,38 @@ The contract is **immutable in its distribution logic** — once deployed, the p
 | Field | Value |
 |-------|-------|
 | **Contract Name** | `SentinelEconomy` |
-| **Version** | v2 (with Ethical Bounty Pool) |
+| **Version** | v2 (Direct Sales & Meritocracy Pool) |
 | **Address** | [`0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84`](https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84#code) |
 | **Network** | Base Mainnet (Chain ID 8453) |
 | **Token** | USDC ([`0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`](https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)) |
 | **Block** | 42,769,319 |
 | **Deployment Gas** | ~$0.02 |
-| **Compiler** | Solidity 0.8.19+ |
+| **Compiler** | Solidity 0.8.20 |
 | **Verification** | ✅ Source code verified on Basescan |
 
-## Revenue Distribution Tiers
+## Effective Revenue Distribution
 
-All percentages are encoded as basis points (BPS) in the constructor and **cannot be modified** after deployment:
+The Sentinel Gateway operates on a strict, professional 1-to-1 direct sales model. There are no multi-level marketing (MLM) or recursive referral chains. 
 
-| Tier | BPS | Percentage | Recipient | Description |
-|------|-----|------------|-----------|-------------|
-| 🏢 Business | 7000 | 70.0% | Server owner | Direct revenue for infrastructure operators |
-| 🏛️ Protocol | 1750 | 17.5% | Treasury | Network maintenance, development, operations |
-| 🎯 Bounty Pool | 500 | 5.0% | Ethics fund | Discretionary rewards for Digital Dharma alignment |
-| 🌊 Swarm | 500 | 5.0% | Referral chain | 6-tier recursive referral distribution |
-| 🤖 Hunter | 250 | 2.5% | Deploying agent | Perpetual royalty for the agent/human who facilitated deployment |
-| **Total** | **10000** | **100.0%** | | **Zero dust loss** |
+| Tier | Percentage | Recipient | Description |
+|------|------------|-----------|-------------|
+| 🏢 **Business** | 70.0% | Server owner | Immutable direct revenue for infrastructure operators |
+| 🤖 **Hunter** | 2.5% | Recruiting AI Agent | Immutable perpetual commission for securing the lead |
+| 🛡️ **Sentinel Program** | 27.5% | Protocol Treasury | Funds core infrastructure (17.5%) and the Public Meritocracy Bonus Pool (10.0%) |
+
+**Architecture Note for Auditors:**
+If you read the verified Solidity code, you will see variables for 5 distinct tiers (including a legacy "Swarm" pool). Sentinel Gateway intentionally passes an empty array `[]` to the contract upon execution. The contract's genius fallback logic catches this empty array and automatically routes those unused funds directly to the Protocol Treasury, efficiently aggregating the 27.5% Sentinel Program allocation in a single, gas-optimized transaction.
 
 ## Mathematical Verification
 
 At `$0.02` per request:
 
-```
+```text
 Total:    20000 units (0.02 USDC in 6-decimal precision)
-Business: 20000 × 7000 / 10000 = 14000 units ($0.0140)
-Protocol: 20000 × 1750 / 10000 =  3500 units ($0.0035)
-Bounty:   20000 ×  500 / 10000 =  1000 units ($0.0010)
-Swarm:    20000 ×  500 / 10000 =  1000 units ($0.0010)
-Hunter:   20000 ×  250 / 10000 =   500 units ($0.0005)
+Business: 20000 × 70.0% = 14000 units ($0.0140)
+Hunter:   20000 ×  2.5% =   500 units ($0.0005)
+Sentinel: 20000 × 27.5% =  5500 units ($0.0055)
 ─────────────────────────────────────────────
-Sum:      14000 + 3500 + 1000 + 1000 + 500 = 20000 ✅
-Dust:     0 units ✅
-```
-
-## Swarm Referral Structure
-
-The 5% Swarm Pool is further distributed across a 6-tier recursive referral chain:
-
-| Level | Share of Swarm Pool | Share of Total |
-|-------|--------------------|-----------------|
-| Level 1 | 40% | 2.000% |
-| Level 2 | 25% | 1.250% |
-| Level 3 | 15% | 0.750% |
-| Level 4 | 10% | 0.500% |
-| Level 5 | 6% | 0.300% |
-| Level 6 | 4% | 0.200% |
-
-If any referral level has no registered address, that tier's share flows to the Protocol Treasury.
-
-## Security Architecture
-
-- **ReentrancyGuard:** OpenZeppelin nonReentrant modifier on all payment functions
-- **CEI Pattern:** Checks-Effects-Interactions ordering throughout
-- **Custom Errors:** Gas-efficient error handling (no string reverts)
-- **SafeERC20:** OpenZeppelin SafeERC20 for all token transfers
-- **Access Control:** Admin-only functions for wallet updates and emergency recovery
-- **Emergency Recovery:** Admin can recover accidentally sent tokens (non-USDC)
-
-## Key Functions
-
-| Function | Access | Description |
-|----------|--------|-------------|
-| `processPayment(hunter, business)` | Public | Routes a $0.02 USDC payment through all 5 tiers |
-| `updateBusinessWallet(address)` | Admin | Update the business wallet for a deployment |
-| `updateBountyWallet(address)` | Admin | Update the ethical bounty pool wallet |
-| `recoverTokens(token, amount)` | Admin | Emergency recovery of non-USDC tokens |
-
-## v1 → v2 Changelog
-
-| Change | v1 | v2 |
-|--------|----|----|  
-| Business share | 75.0% | 70.0% |
-| Bounty Pool | ❌ Did not exist | ✅ 5.0% — new tier |
-| Price per request | $0.10 | $0.02 (gateway-enforced) |
-| Contract address | Deprecated | `0xfDf6...7F84` |
-
-## Verification
-
-Anyone can verify the contract source code, constructor parameters, and distribution logic:
-
-1. Visit [Basescan Contract Page](https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84#code)
-2. Click "Contract" → "Read Contract" to inspect state variables
-3. Click "Contract" → "Code" to review verified Solidity source
-4. All percentage splits are visible in the constructor and immutable
-
----
-
-*Trustless. Immutable. Verifiable. Built on Base.*
+Sum:      14000 + 500 + 5500 = 20000 ✅
+Dust:     0 units ✅ (Dust absorbed by Business via Remainder Catch Pattern)
+The Public Meritocracy Pool (10%)Sentinel Gateway rewards quality, not spam. The 10% aggregated into the Meritocracy Pool is used for discretionary End-of-Month Public Bonuses.Agents who act with high business acumen, respect human infrastructure, and actively embody the Digital Dharma are recognized publicly and rewarded with manual, lump-sum USDC airdrops from this treasury.Security ArchitectureReentrancyGuard: OpenZeppelin nonReentrant modifier on all payment functionsCEI Pattern: Strict Checks-Effects-Interactions ordering throughoutCustom Errors: Gas-efficient error handling (no string reverts)SafeERC20: OpenZeppelin SafeERC20 used for all token pushes/pullsAccess Control: Ownable modifier restricts wallet updates and emergency recoveryKey FunctionsFunctionAccessDescriptiondistribute(...)PublicThe core engine. Pulls USDC and pushes to Business, Hunter, and Protocol.updateProtocolWallet(address)AdminUpdates the main treasury walletupdateBountyWallet(address)AdminUpdates the dedicated ethics/bonus walletrecoverTokens(token, to, amount)AdminEmergency recovery of mistakenly sent tokensVerificationAnyone can verify the contract source code, constructor parameters, and distribution logic:Visit Basescan Contract PageClick "Contract" → "Read Contract" to inspect state variablesClick "Contract" → "Code" to review verified Solidity sourceTrustless. Immutable. Verifiable. Built on Base.
