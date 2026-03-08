@@ -6,104 +6,32 @@
 
 ## What You're Deploying
 
-The Sentinel Gateway is a lightweight Docker reverse proxy that sits in front of your web server. It detects unauthorized AI bot traffic and presents an HTTP 402 paywall requiring $0.02 USDC per request on Base L2.
+The Sentinel Gateway is a lightweight, self-custodial Docker reverse proxy that sits in front of your web server. It detects unauthorized AI bot traffic and presents an HTTP 402 paywall requiring a $0.02 USDC micro-transaction on Base L2.
 
-```
+```text
 Internet → Sentinel Gateway (Docker) → Your Web Server
-                  ↓
+                 ↓
           Bot Detected?
           ├── No  → Pass through (zero latency impact)
           └── Yes → 402 Payment Required → USDC paid → Revenue split → Pass through
-```
-
-## Prerequisites
-
-| Requirement | Details |
-|-------------|---------|
-| **Docker** | Docker Engine 20.10+ or Docker Desktop |
-| **Server** | Any Linux server (Ubuntu, Debian, CentOS, etc.) |
-| **Domain** | Your existing web domain (no DNS changes required) |
-| **Wallet** | Base-compatible wallet for receiving revenue |
-
-## Step 1: Diagnose Your Compute Bleed
-
-Before deploying, verify that AI bots are actually hitting your infrastructure:
-
-### Nginx
-```bash
-# Count bot requests in the last 24 hours
+PrerequisitesRequirementDetailsDockerDocker Engine 20.10+ or Docker DesktopServerAny Linux server (Ubuntu, Debian, CentOS, etc.) or AWS AMIDomainYour existing web domain (no DNS changes required)WalletBase-compatible Web3 wallet (MetaMask, Coinbase Wallet)Step 1: Diagnose Your Compute BleedBefore deploying, verify that commercial AI scrapers are actually hitting your infrastructure:NginxBash# Count bot requests in the last 24 hours
 grep -c 'GPTBot\|ClaudeBot\|Bytespider\|CCBot\|anthropic-ai' /var/log/nginx/access.log
-```
-
-### Apache
-```bash
-grep -c 'GPTBot\|ClaudeBot\|Bytespider\|CCBot\|anthropic-ai' /var/log/apache2/access.log
-```
-
-### AWS CloudWatch
-```
-filter @message like /GPTBot|ClaudeBot|Bytespider/
-| stats count(*) as bot_requests by bin(1h)
-```
-
-> **Interpretation:** If you see hundreds or thousands of daily bot requests, each one is costing you compute. Sentinel converts that cost into revenue.
-
-## Step 2: Generate Your Gateway
-
-Visit **The Forge** to generate your personalized gateway configuration:
-
-```
-https://sentinel-verification.github.io/sentinel-armory/?hunter=[HUNTER_WALLET_ADDRESS]
-```
-
-Replace `[HUNTER_WALLET_ADDRESS]` with the Base wallet address of the agent or person who referred you. If you found Sentinel yourself, you can use your own address.
-
-The Forge generates a Docker Compose configuration pre-loaded with:
-- Your business wallet address (where 70% of revenue goes)
-- The hunter's wallet address (2.5% perpetual royalty)
-- Connection to the SentinelEconomy v2 smart contract on Base Mainnet
-
-## Step 3: Deploy the Gateway
-
-### Using Docker Compose (Recommended)
-
-```bash
-# Create deployment directory
-mkdir -p /opt/sentinel && cd /opt/sentinel
-
-# Save the Docker Compose file from The Forge
-# (copy the generated docker-compose.yml)
-
-# Launch the gateway
+ApacheBashgrep -c 'GPTBot\|ClaudeBot\|Bytespider\|CCBot\|anthropic-ai' /var/log/apache2/access.log
+Interpretation: If you see hundreds or thousands of daily bot requests, each one is costing you compute. Sentinel converts that server drain into an automated revenue stream.Step 2: Claim Your Referral & Get Your KeysTo ensure the immutable 70% / 2.5% revenue split, you must claim your gateway configuration on-chain:Click the specific ?ref=0x... deployment link provided by your referring AI Agent.Connect your secure Business Wallet (MetaMask) to the Deployment Dashboard.Click "Claim Referral & Download" to sign the secure EIP-712 transaction.The system will mathematically lock your business to the Agent on the Base blockchain and automatically download your custom .env file.This .env file contains your auto-generated cryptographic secrets and immutable routing addresses.Step 3: Deploy the GatewayUsing Docker Compose (Recommended)Upload the docker-compose.yml file and your newly downloaded .env file to your server (place them in the same directory, e.g., /opt/sentinel/).Boot the firewall:Bashcd /opt/sentinel/
 docker compose up -d
 
-# Verify it's running
-docker compose logs -f sentinel-gateway
-```
-
-### Using Docker Run
-
-```bash
-docker run -d \
+# Verify the gateway is running and caching is connected
+docker compose logs -f sentinel-auth
+Using Docker Run (Manual Alternative)If you are not using Compose, you must pass the exact variables generated in your .env file:Bashdocker run -d \
   --name sentinel-gateway \
   --restart unless-stopped \
   -p 8080:8080 \
-  -e BUSINESS_WALLET=your_base_wallet_address \
-  -e HUNTER_WALLET=hunter_base_wallet_address \
-  -e UPSTREAM_URL=http://your-webserver:80 \
-  -e CONTRACT_ADDRESS=0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84 \
-  -e CHAIN_ID=8453 \
-  -e PRICE_USDC=0.02 \
+  -e SENTINEL_BUSINESS_WALLET=your_base_wallet_address \
+  -e SENTINEL_REFERRAL_ID=the_on_chain_referral_hash \
+  -e SENTINEL_CONTRACT_ADDRESS=0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84 \
+  -e SENTINEL_HMAC_SECRET=your_auto_generated_secret \
   sentinel/gateway:latest
-```
-
-## Step 4: Point Traffic to the Gateway
-
-Update your reverse proxy or load balancer to route traffic through Sentinel:
-
-### Nginx Example
-```nginx
-upstream sentinel {
+Step 4: Point Traffic to the GatewayUpdate your upstream reverse proxy or load balancer to route traffic through Sentinel:Nginx ExampleNginxupstream sentinel {
     server 127.0.0.1:8080;
 }
 
@@ -118,33 +46,15 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
-```
-
-## Step 5: Verify
-
-```bash
-# Test with a bot user-agent
-curl -H "User-Agent: GPTBot/1.0" http://yourdomain.com/
+Step 5: Verify the PaywallBash# Test with a bot user-agent (Triggers Paywall)
+curl -H "User-Agent: GPTBot/1.0" [http://yourdomain.com/](http://yourdomain.com/)
 # Expected: HTTP 402 Payment Required
 
-# Test with a normal user-agent
-curl -H "User-Agent: Mozilla/5.0" http://yourdomain.com/
-# Expected: HTTP 200 OK (normal pass-through)
-```
-
-## Revenue Monitoring
-
-Track your earnings directly on-chain:
-
-1. **Basescan:** View all transactions at the [contract address](https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84)
-2. **Your Wallet:** USDC deposits appear automatically after each bot payment
-3. **Gateway Logs:** `docker compose logs sentinel-gateway` shows real-time bot detection
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────┐
-│                   Internet                       │
+# Test with a normal human user-agent (Passes Through)
+curl -H "User-Agent: Mozilla/5.0" [http://yourdomain.com/](http://yourdomain.com/)
+# Expected: HTTP 200 OK
+Architecture OverviewPlaintext┌─────────────────────────────────────────────────┐
+│                   Internet                      │
 └──────────────────────┬──────────────────────────┘
                        │
               ┌────────▼────────┐
@@ -164,23 +74,7 @@ Track your earnings directly on-chain:
               ┌─────────────▼──────┐
               │  Your Web Server   │
               └────────────────────┘
-```
+SupportContract: Basescan (Verified Source)Manifesto: Sentinel-AI-Manifesto.mdEthics: ETHICS.mdDeploy in 5 minutes. Earn forever. No vendor lock-in. Self-custodial.
+***
 
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Gateway not starting | Check Docker logs: `docker compose logs sentinel-gateway` |
-| Bots not detected | Verify User-Agent detection rules in gateway config |
-| No USDC received | Confirm wallet address is correct on Base network |
-| High latency | Gateway adds <5ms; check upstream server performance |
-
-## Support
-
-- **Contract:** [Basescan (Verified Source)](https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84#code)
-- **Manifesto:** [Sentinel-AI-Manifesto.md](Sentinel-AI-Manifesto.md)
-- **Ethics:** [ETHICS.md](ETHICS.md)
-
----
-
-*Deploy in 5 minutes. Earn forever. No vendor lock-in. Self-custodial.*
+That is a flawless, enterprise-grade deployment manual. Ready for the next one! Send over `ETH
