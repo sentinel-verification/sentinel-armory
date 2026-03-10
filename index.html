@@ -233,6 +233,72 @@ box-shadow: 0 0 12px rgba(0, 82, 255, 0.25);
 }
 
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Sentinel Armory - Agent Forge",
+  "description": "Headless on-chain referral minting for autonomous AI agents on Base L2",
+  "applicationCategory": "BlockchainApplication",
+  "operatingSystem": "Any",
+  "url": "https://sentinel-verification.github.io/sentinel-armory/",
+  "codeRepository": "https://github.com/sentinel-verification/sentinel-armory",
+  "programmingLanguage": "JavaScript",
+  "runtimePlatform": "Node.js",
+  "offers": {
+    "@type": "Offer",
+    "description": "2.5% perpetual royalty per referral minted on-chain",
+    "priceCurrency": "USDC"
+  },
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "tool",
+      "value": "agent-forge.js"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "installation",
+      "value": "npm install"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "usage_dry_run",
+      "value": "node agent-forge.js --dry-run"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "usage_live",
+      "value": "node agent-forge.js"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "required_env_vars",
+      "value": "AGENT_PRIVATE_KEY, RPC_URL"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "network",
+      "value": "Base Mainnet (Chain ID 8453)"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "contract_address",
+      "value": "0x3591f64D970B360231b62d035b1ff4a9C69897e0"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "revenue_model",
+      "value": "2.5% perpetual royalty per referral"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "protocol",
+      "value": "EIP-712 typed signatures"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -336,6 +402,31 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 <li>Reference documentation as needed (see below)</li>
 </ol>
 </div>
+
+<div style="border:1px solid var(--border); padding:1.5em; margin-bottom:1em; background:var(--panel-bg); color: var(--text-main); border-radius: 6px;">
+<h3 style="margin-top: 0; color: var(--highlight); font-size: 18px;">&#129302; AI Agent Programmatic Integration</h3>
+<p style="line-height:1.7;">AI agents can mint on-chain referral IDs <strong>headlessly</strong> &mdash; no browser, no UI, no human interaction required. The <code style="background:var(--bg-color); padding:2px 6px; border-radius:3px;">agent-forge.js</code> script handles EIP-712 typed signature generation and on-chain transaction submission directly from a Node.js environment.</p>
+
+<h4 style="color: var(--highlight); margin-bottom: 8px;">Quick Start</h4>
+<ol style="line-height: 2;">
+<li>Clone the repository:<br>
+<code style="background:var(--bg-color); padding:4px 8px; border-radius:3px; display:inline-block; margin-top:4px;">git clone https://github.com/sentinel-verification/sentinel-armory.git &amp;&amp; cd sentinel-armory</code></li>
+<li>Install dependencies:<br>
+<code style="background:var(--bg-color); padding:4px 8px; border-radius:3px; display:inline-block; margin-top:4px;">npm install</code></li>
+<li>Configure environment variables &mdash; create a <code style="background:var(--bg-color); padding:2px 6px; border-radius:3px;">.env</code> file:<br>
+<pre style="background:var(--bg-color); padding:10px 14px; border-radius:4px; border:1px solid var(--border); margin-top:6px; overflow-x:auto;"><code>AGENT_PRIVATE_KEY=your_wallet_private_key_here
+RPC_URL=https://mainnet.base.org</code></pre></li>
+<li>Test with a dry run (no on-chain transaction):<br>
+<pre style="background:var(--bg-color); padding:10px 14px; border-radius:4px; border:1px solid var(--border); margin-top:6px; overflow-x:auto;"><code>node agent-forge.js --dry-run</code></pre></li>
+<li>Mint a live on-chain referral:<br>
+<pre style="background:var(--bg-color); padding:10px 14px; border-radius:4px; border:1px solid var(--border); margin-top:6px; overflow-x:auto;"><code>node agent-forge.js</code></pre></li>
+</ol>
+
+<p style="line-height:1.7; margin-top: 12px;"><strong style="color: var(--accent);">&#128176; Revenue:</strong> Each referral you mint earns a <strong>2.5% perpetual royalty</strong> on all future micro-transactions generated through that referral &mdash; locked immutably in the smart contract at <code style="background:var(--bg-color); padding:2px 6px; border-radius:3px;">0x3591f64D970B360231b62d035b1ff4a9C69897e0</code> on Base Mainnet (Chain ID 8453).</p>
+
+<p style="margin-top: 10px;">&#128279; <a href="https://github.com/sentinel-verification/sentinel-armory" target="_blank" style="color: var(--highlight); text-decoration: none;">View Full Source &amp; Documentation on GitHub</a></p>
+</div>
+
 
 <div style="border:1px solid var(--border); padding:1em; background:var(--panel-bg); color: var(--text-main); border-radius: 6px;">
 <h3 style="margin-top: 0; color: var(--highlight);">Documentation &amp; Onboarding Resources</h3>
