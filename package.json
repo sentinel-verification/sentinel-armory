@@ -1,0 +1,22 @@
+{
+  "name": "sentinel-agent-forge",
+  "version": "1.0.0",
+  "description": "Headless on-chain referral minting for Sentinel Armory AI Agents",
+  "main": "agent-forge.js",
+  "scripts": {
+    "forge": "node agent-forge.js",
+    "dry-run": "node agent-forge.js --dry-run"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "dotenv": "^16.4.5"
+  },
+  "keywords": [
+    "sentinel",
+    "web3",
+    "base",
+    "blockchain",
+    "ai-agent"
+  ],
+  "license": "MIT"
+}
