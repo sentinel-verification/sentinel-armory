@@ -375,10 +375,12 @@ const COMPANY_ADDRESS = '0x21dFFAd5D2884DA68AD2e9BA866Bf6CA3A815604';
 
 const ABI = [
 "function createReferral(bytes32 referralId, address referrer, bytes signature) external",
-"function claimReferral(bytes32 referralId, address business, bytes signature) external"
+"function claimReferral(bytes32 referralId, address business, bytes signature) external",
+"function getReferral(bytes32 referralId) external view returns (tuple(address company, address referrer, address business, uint64 createdAt, uint64 claimedAt, uint8 status))"
 ];
 
 let provider, signer, userAddress, contract;
+let hunterWallet = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 const referralIdFromUrl = urlParams.get('ref');
@@ -627,6 +629,14 @@ async function claimReferral() {
         var signature = await signer._signTypedData(domain, types, message);
         updateStatus('Signature secured! Please confirm the blockchain transaction in your wallet...');
 
+        // Read the hunter/referrer wallet from the on-chain referral record
+        try {
+            var referralData = await contract.getReferral(referralIdFromUrl);
+            hunterWallet = referralData.referrer;
+        } catch (readErr) {
+            console.warn('Could not read referral data (may not exist yet):', readErr.message);
+            hunterWallet = '0x0000000000000000000000000000000000000000';
+        }
         var tx = await contract.claimReferral(referralIdFromUrl, userAddress, signature);
         updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
 
@@ -647,27 +657,40 @@ function generateSecureString() {
 function downloadGateway() {
     var cachePassword = generateSecureString() + generateSecureString();
     var hmacSecret = generateSecureString() + generateSecureString();
+    var hunterAddr = hunterWallet || '0x_OPEN_CLAW_AGENT_WALLET_HERE';
 
     var envPayload = '# ============================================================\n';
-    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION (PATH B)\n';
+    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION\n';
     envPayload += '# ============================================================\n\n';
-    envPayload += '# 1. YOUR BUSINESS WALLET (Auto-injected from Web3 Claim)\n';
+    envPayload += '# 1. YOUR WALLET (Where your 70% business revenue gets sent)\n';
     envPayload += 'SENTINEL_BUSINESS_WALLET=' + userAddress + '\n\n';
-    envPayload += '# 2. ON-CHAIN REFERRAL ID (Locked via Smart Contract)\n';
-    envPayload += 'SENTINEL_REFERRAL_ID=' + referralIdFromUrl + '\n\n';
-    envPayload += '# 3. GLOBAL ROUTER (The Sentinel Protocol Smart Contract)\n';
+    envPayload += '# 2. REFERRAL WALLET (The Agent/Hunter who referred you - Do not change)\n';
+    envPayload += 'SENTINEL_HUNTER_WALLET=' + hunterAddr + '\n\n';
+    envPayload += '# 3. GLOBAL ROUTER (The Sentinel Protocol V2 Smart Contract - Do not change)\n';
     envPayload += 'SENTINEL_CONTRACT_ADDRESS=0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84\n\n';
-    envPayload += '# 4. SECURITY & PRICING (Auto-generated for your server)\n';
-    envPayload += 'SENTINEL_PRICE_PER_REQUEST=0.02\n';
+    envPayload += '# 4. SECURITY & PRICING\n';
     envPayload += 'SENTINEL_CACHE_PASSWORD=' + cachePassword + '\n';
-    envPayload += 'SENTINEL_HMAC_SECRET=' + hmacSecret + '\n\n';
-    envPayload += '# 5. NETWORK CONFIGURATION\n';
-    envPayload += 'SENTINEL_CHAIN_ID=8453\n';
-    envPayload += 'SENTINEL_RPC_URL=https://mainnet.base.org\n\n';
-    envPayload += '# --- INSTRUCTIONS ---\n';
-    envPayload += '# 1. Save this file as .env in your project root\n';
-    envPayload += '# 2. Run: docker pull sentinelverification/gateway:latest\n';
-    envPayload += '# 3. Run: docker run --env-file .env -p 8080:8080 sentinelverification/gateway:latest\n';
+    envPayload += 'SENTINEL_HMAC_SECRET=' + hmacSecret + '\n';
+    envPayload += 'SENTINEL_SETTLEMENT_AMOUNT=20000\n\n';
+    envPayload += '# 5. REFERRAL REGISTRY CONTRACT v2 - Smart-Wallet Compatible (Do not change)\n';
+    envPayload += 'SENTINEL_REFERRAL_CONTRACT=0x3591f64D970B360231b62d035b1ff4a9C69897e0\n\n';
+    envPayload += '# 6. BLOCKCHAIN RPC CONNECTION (Required for the Verifier to listen for payments)\n';
+    envPayload += '# NOTE: Replace YOUR_ALCHEMY_API_KEY with your free key from https://dashboard.alchemy.com\n';
+    envPayload += 'SENTINEL_RPC_URL=https://mainnet.base.org\n';
+    envPayload += 'SENTINEL_RPC_WSS_URL=wss://base-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_API_KEY\n\n';
+    envPayload += '# 7. BONUS FIELDS (Useful for debugging and integration)\n';
+    envPayload += 'SENTINEL_REFERRAL_ID=' + referralIdFromUrl + '\n';
+    envPayload += 'SENTINEL_CHAIN_ID=8453\n\n';
+    envPayload += '# --- DEPLOYMENT INSTRUCTIONS ---\n';
+    envPayload += '# 1. Save this file as .env\n';
+    envPayload += '# 2. IMPORTANT: Replace YOUR_ALCHEMY_API_KEY in SENTINEL_RPC_URL and SENTINEL_RPC_WSS_URL\n';
+    envPayload += '#    with your free Alchemy API key from https://dashboard.alchemy.com\n';
+    envPayload += '#    (The WebSocket URL is required for the payment verifier to work)\n';
+    envPayload += '# 3. Deploy via Google Cloud:\n';
+    envPayload += '#    - Create a VM from the public image: sentinel-gateway-public-v2\n';
+    envPayload += '#      (Project: sentinel-verification)\n';
+    envPayload += '#    - Add this file\'s contents as VM metadata with key: sentinel-env\n';
+    envPayload += '#    - The gateway starts automatically on boot\n';
     envPayload += '# Full docs: https://github.com/sentinel-verification/sentinel-armory\n';
 
     var blob = new Blob([envPayload], { type: 'text/plain' });
