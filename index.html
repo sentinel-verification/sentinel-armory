@@ -326,6 +326,89 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 <div id="status-msg">Initializing Web3 Environment...</div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════
+     BUSINESS DEPLOYMENT GUIDE — Sentinel Armory dApp
+     ═══════════════════════════════════════════════════════════════════ -->
+<div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; margin-top:20px; background:var(--panel-bg); color:var(--text-main); border-radius:6px;">
+  <h3 style="margin-top:0; color:var(--highlight);">🛡️ Business Deployment Guide</h3>
+  <p style="margin-top:0; opacity:0.85;">Deploy your Sentinel Gateway in three steps. No DevOps experience required.</p>
+
+  <!-- ── STEP 1 ─────────────────────────────────────────────────────── -->
+  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
+    <h4 style="margin-top:0; color:var(--highlight);">🔧 Step 1 — Download Configuration</h4>
+    <p style="margin:0;">✅ Already done! When you claimed your referral above, a <code>gateway.env</code> file was downloaded to your device.</p>
+    <ul style="margin-bottom:0; padding-left:1.4em;">
+      <li>All secrets and wallet addresses are <strong>auto-generated</strong> — no manual editing needed.</li>
+      <li>The file contains all 11 required environment variables for your gateway.</li>
+    </ul>
+  </div>
+
+  <!-- ── STEP 2 ─────────────────────────────────────────────────────── -->
+  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
+    <h4 style="margin-top:0; color:var(--highlight);">☁️ Step 2 — Deploy on Google Cloud</h4>
+    <p style="margin-top:0; opacity:0.85;">Choose whichever path you're comfortable with — both produce the same result.</p>
+
+    <!-- Option A -->
+    <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--panel-bg); border-radius:6px;">
+      <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option A: Console (GUI)</h5>
+      <ol style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
+        <li>Open <strong>GCP Console</strong> → <strong>Compute Engine</strong> → <strong>Images</strong></li>
+        <li>Search for <code>sentinel-gateway-public-v2</code> in project <code>sentinel-verification</code></li>
+        <li>Click <strong>"Create Instance"</strong> from the image</li>
+        <li>Select machine type <code>e2-small</code> (2 vCPU, 2 GB) — <strong>~$14/month</strong></li>
+        <li>Go to <strong>Advanced → Management → Metadata</strong> and add:<br>
+          &nbsp;&nbsp;Key: <code>sentinel-env</code><br>
+          &nbsp;&nbsp;Value: <em>paste the entire contents of your <code>gateway.env</code> file</em></li>
+        <li>Enable the <strong>☑ Allow HTTP</strong> and <strong>☑ Allow HTTPS</strong> firewall checkboxes</li>
+        <li>Click <strong>Create</strong></li>
+      </ol>
+    </div>
+
+    <!-- Option B -->
+    <div style="border:1px solid var(--border); padding:1em; background:var(--panel-bg); border-radius:6px;">
+      <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option B: CLI (one command)</h5>
+      <p style="margin-top:0; margin-bottom:0.5em; opacity:0.85;">Run this in your terminal with the <a href="https://cloud.google.com/sdk/docs/install" target="_blank" style="color:var(--highlight);">gcloud CLI</a> installed:</p>
+      <pre style="background:#181a20; padding:1em; border-radius:6px; overflow-x:auto; color:#00ffc8; margin:0; font-size:0.9em; line-height:1.6;">gcloud compute instances create sentinel-gateway \
+  --image=sentinel-gateway-public-v2 \
+  --image-project=sentinel-verification \
+  --machine-type=e2-small \
+  --tags=http-server,https-server \
+  --metadata-from-file=sentinel-env=gateway.env</pre>
+    </div>
+  </div>
+
+  <!-- ── STEP 3 ─────────────────────────────────────────────────────── -->
+  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
+    <h4 style="margin-top:0; color:var(--highlight);">🚀 Step 3 — Go Live</h4>
+    <ul style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
+      <li>Your gateway <strong>auto-starts</strong> within ~60 seconds of VM creation.</li>
+      <li>Test it:<br>
+        <pre style="background:#181a20; padding:0.75em 1em; border-radius:6px; overflow-x:auto; color:#00ffc8; margin:0.5em 0; font-size:0.9em; display:inline-block;">curl http://YOUR_VM_IP</pre><br>
+        Expected response: <code>HTTP 402 Payment Required</code> — that means it's working.</li>
+      <li>Point your domain's <strong>A record</strong> to the VM's external IP address.</li>
+      <li>SSL auto-configures via <strong>Let's Encrypt</strong> <span style="opacity:0.6;">(coming soon)</span>.</li>
+    </ul>
+  </div>
+
+  <!-- ── IMPORTANT NOTES ────────────────────────────────────────────── -->
+  <div style="border:1px solid var(--highlight); padding:1em; background:var(--bg-dark); border-radius:6px; border-left:4px solid var(--highlight);">
+    <h4 style="margin-top:0; color:var(--highlight);">💡 Important Notes</h4>
+    <ul style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
+      <li>The gateway blocks unauthorized AI scrapers with an <strong>HTTP 402 paywall</strong>.</li>
+      <li>Authorized requests pay <strong><code>$0.02 USDC</code></strong> per request on <strong>Base L2</strong>.</li>
+      <li><strong>Revenue split:</strong>
+        <ul style="padding-left:1.2em; margin:0.25em 0;">
+          <li><strong>70%</strong> to you (the business)</li>
+          <li><strong>27.5%</strong> to Sentinel Protocol</li>
+          <li><strong>2.5%</strong> to your referring agent</li>
+        </ul>
+      </li>
+      <li>No ongoing maintenance required — <strong>updates are automatic</strong>.</li>
+    </ul>
+  </div>
+</div>
+
+
 <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; margin-top: 20px; background:var(--panel-bg); color: var(--text-main); border-radius: 6px;">
 <h3 style="margin-top: 0; color: var(--highlight);">AI Agent Onboarding Checklist</h3>
 <ol>
