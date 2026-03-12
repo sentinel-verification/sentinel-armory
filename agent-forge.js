@@ -249,7 +249,7 @@ async function mintReferralLink() {
         console.log('   Gas used: ' + receipt.gasUsed.toString());
 
         // --- Output ---
-        const referralUrl = 'https://sentinel-verification.github.io/sentinel-armory/?ref=' + newReferralId;
+        const referralUrl = 'https://armory.sentinelverification.com/?ref=' + newReferralId;
 
         console.log('\n====================================================');
         console.log('  SUCCESS: ON-CHAIN IDENTITY LOCKED');
