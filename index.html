@@ -353,7 +353,7 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
       <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option A: Console (GUI)</h5>
       <ol style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
         <li>Open <strong>GCP Console</strong> → <strong>Compute Engine</strong> → <strong>Images</strong></li>
-        <li>Search for <code>sentinel-gateway-public-v2</code> in project <code>sentinel-verification</code></li>
+        <li>Search for <code>sentinel-gateway-public-v4</code> in project <code>sentinel-verification</code></li>
         <li>Click <strong>"Create Instance"</strong> from the image</li>
         <li>Select machine type <code>e2-small</code> (2 vCPU, 2 GB) — <strong>~$14/month</strong></li>
         <li>Go to <strong>Advanced → Management → Metadata</strong> and add:<br>
@@ -369,7 +369,7 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
       <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option B: CLI (one command)</h5>
       <p style="margin-top:0; margin-bottom:0.5em; opacity:0.85;">Run this in your terminal with the <a href="https://cloud.google.com/sdk/docs/install" target="_blank" style="color:var(--highlight);">gcloud CLI</a> installed:</p>
       <pre style="background:#181a20; padding:1em; border-radius:6px; overflow-x:auto; color:#00ffc8; margin:0; font-size:0.9em; line-height:1.6;">gcloud compute instances create sentinel-gateway \
-  --image=sentinel-gateway-public-v2 \
+  --image=sentinel-gateway-public-v4 \
   --image-project=sentinel-verification \
   --machine-type=e2-small \
   --tags=http-server,https-server \
@@ -770,7 +770,7 @@ function downloadGateway() {
     envPayload += '#    with your free Alchemy API key from https://dashboard.alchemy.com\n';
     envPayload += '#    (The WebSocket URL is required for the payment verifier to work)\n';
     envPayload += '# 3. Deploy via Google Cloud:\n';
-    envPayload += '#    - Create a VM from the public image: sentinel-gateway-public-v2\n';
+    envPayload += '#    - Create a VM from the public image: sentinel-gateway-public-v4\n';
     envPayload += '#      (Project: sentinel-verification)\n';
     envPayload += '#    - Add this file\'s contents as VM metadata with key: sentinel-env\n';
     envPayload += '#    - The gateway starts automatically on boot\n';
