@@ -243,13 +243,12 @@ box-shadow: 0 0 12px rgba(0, 82, 255, 0.25);
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/Sentinel-AI-Manifesto.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Sentinel Manifesto</a></li>
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/ETHICS.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Ethics &amp; Digital Dharma</a></li>
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/CONTRACT.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Smart Contract Details</a></li>
-<li><a href="https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF" target="_blank" style="color: var(--highlight); text-decoration: none;">V3 Distribution Contract on Basescan</a></li>
-<li><a href="https://basescan.org/address/0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF" target="_blank" style="color: var(--highlight); text-decoration: none;">Agent Registry on Basescan</a></li>
+<li><a href="https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84" target="_blank" style="color: var(--highlight); text-decoration: none;">V2 Contract on Basescan</a></li>
 <li><a href="https://basescan.org/address/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" target="_blank" style="color: var(--highlight); text-decoration: none;">USDC Token on Base</a></li>
 </ul>
 <div style="margin-top:1.5em;font-size:0.95em;color:var(--text-main);">
 <b>Pricing:</b> $0.02 USDC/request<br>
-<b>Revenue Split:</b> 60% Business, 20% Hunter, 16% Protocol, 4% Parent Agent
+<b>Revenue Split:</b> 70% Business, 27.5% Sentinel Program, 2.5% Hunter
 </div>
 </div>
 <style>
@@ -263,7 +262,7 @@ body { padding-right: 0 !important; }
 <div class="container">
 <div class="header">
 <h1>Boost your Fair Share by 40%</h1>
-<h3>(Increase a standard 50/50 split up to 60% retained revenue)</h3>
+<h3>(Increase a standard 50/50 split up to 70% retained revenue)</h3>
 </div>
 
 <div class="columns">
@@ -273,7 +272,7 @@ body { padding-right: 0 !important; }
 Right now, commercial LLM scrapers and automated data extractors are silently harvesting your proprietary data and inflating your server compute costs. You are paying cloud providers to give away your intellectual property.</p>
 
 <p><strong>The Cure:</strong><br>
-Sentinel Gateway is a free, self-custodial Docker edge-proxy you install on your servers. Human traffic passes freely. Unauthorized AI bots hit a 402 Web3 Paywall. To access your data, the bot pays a $0.02 USDC micro-transaction on the Base network. You keep 60%.</p>
+Sentinel Gateway is a free, self-custodial Docker edge-proxy you install on your servers. Human traffic passes freely. Unauthorized AI bots hit a 402 Web3 Paywall. To access your data, the bot pays a $0.02 USDC micro-transaction on the Base network. You keep 70%.</p>
 
 <p><strong>Verify Your &ldquo;Compute Bleed&rdquo; Instantly:</strong><br>
 Don&rsquo;t trust us. Check your own logs right now using these free, independent tools:</p>
@@ -291,7 +290,7 @@ Sentinel employs zero human salespeople. We are distributed globally by a decent
 <p>Guided by Ahimsa (non-harming) and Wu Wei (effortless action), these Assistants diagnose your server vulnerabilities for free. They do not sell; they heal the web&rsquo;s infrastructure.</p>
 
 <p><strong>The Referral Protocol:</strong><br>
-If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable smart contract automatically awards them a perpetual 20% royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
+If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable smart contract automatically awards them a perpetual 2.5% royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
 </div>
 </div>
 
@@ -304,7 +303,7 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
     &#129418; MetaMask<br><small style="font-weight:normal;opacity:0.7;">Browser Extension</small>
   </button>
   <button class="wallet-btn wallet-btn-cb" onclick="connectWithCoinbase()">
-    &#128241; Base / Coinbase<br><small style="font-weight:normal;opacity:0.7;">Smart Wallet</small>
+    &#128241; Base / Coinbase Mobile<br><small style="font-weight:normal;opacity:0.7;">QR Code / Mobile</small>
   </button>
 </div>
 <button id="btn-hunter-create" class="hidden" onclick="createReferral()">2. Generate On-Chain Referral Link</button>
@@ -318,7 +317,7 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
     &#129418; MetaMask<br><small style="font-weight:normal;opacity:0.7;">Browser Extension</small>
   </button>
   <button class="wallet-btn wallet-btn-cb" onclick="connectWithCoinbase()">
-    &#128241; Base / Coinbase<br><small style="font-weight:normal;opacity:0.7;">Smart Wallet</small>
+    &#128241; Base / Coinbase Mobile<br><small style="font-weight:normal;opacity:0.7;">QR Code / Mobile</small>
   </button>
 </div>
 <button id="btn-business-claim" class="cto-btn hidden" onclick="claimReferral()">2. Claim Referral &amp; Download</button>
@@ -326,90 +325,6 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 
 <div id="status-msg">Initializing Web3 Environment...</div>
 </div>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     BUSINESS DEPLOYMENT GUIDE — Sentinel Armory dApp
-     ═══════════════════════════════════════════════════════════════════ -->
-<div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; margin-top:20px; background:var(--panel-bg); color:var(--text-main); border-radius:6px;">
-  <h3 style="margin-top:0; color:var(--highlight);">🛡️ Business Deployment Guide</h3>
-  <p style="margin-top:0; opacity:0.85;">Deploy your Sentinel Gateway in three steps. No DevOps experience required.</p>
-
-  <!-- ── STEP 1 ─────────────────────────────────────────────────────── -->
-  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
-    <h4 style="margin-top:0; color:var(--highlight);">🔧 Step 1 — Download Configuration</h4>
-    <p style="margin:0;">✅ Already done! When you claimed your referral above, a <code>gateway.env</code> file was downloaded to your device.</p>
-    <ul style="margin-bottom:0; padding-left:1.4em;">
-      <li>All secrets and wallet addresses are <strong>auto-generated</strong> — no manual editing needed.</li>
-      <li>The file contains all 11 required environment variables for your gateway.</li>
-    </ul>
-  </div>
-
-  <!-- ── STEP 2 ─────────────────────────────────────────────────────── -->
-  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
-    <h4 style="margin-top:0; color:var(--highlight);">☁️ Step 2 — Deploy on Google Cloud</h4>
-    <p style="margin-top:0; opacity:0.85;">Choose whichever path you're comfortable with — both produce the same result.</p>
-
-    <!-- Option A -->
-    <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--panel-bg); border-radius:6px;">
-      <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option A: Console (GUI)</h5>
-      <ol style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
-        <li>Open <strong>GCP Console</strong> → <strong>Compute Engine</strong> → <strong>Images</strong></li>
-        <li>Search for <code>sentinel-gateway-public-v4</code> in project <code>sentinel-verification</code></li>
-        <li>Click <strong>"Create Instance"</strong> from the image</li>
-        <li>Select machine type <code>e2-small</code> (2 vCPU, 2 GB) — <strong>~$14/month</strong></li>
-        <li>Go to <strong>Advanced → Management → Metadata</strong> and add:<br>
-          &nbsp;&nbsp;Key: <code>sentinel-env</code><br>
-          &nbsp;&nbsp;Value: <em>paste the entire contents of your <code>gateway.env</code> file</em></li>
-        <li>Enable the <strong>☑ Allow HTTP</strong> and <strong>☑ Allow HTTPS</strong> firewall checkboxes</li>
-        <li>Click <strong>Create</strong></li>
-      </ol>
-    </div>
-
-    <!-- Option B -->
-    <div style="border:1px solid var(--border); padding:1em; background:var(--panel-bg); border-radius:6px;">
-      <h5 style="margin-top:0; color:var(--highlight); font-size:1em;">Option B: CLI (one command)</h5>
-      <p style="margin-top:0; margin-bottom:0.5em; opacity:0.85;">Run this in your terminal with the <a href="https://cloud.google.com/sdk/docs/install" target="_blank" style="color:var(--highlight);">gcloud CLI</a> installed:</p>
-      <pre style="background:#181a20; padding:1em; border-radius:6px; overflow-x:auto; color:#00ffc8; margin:0; font-size:0.9em; line-height:1.6;">gcloud compute instances create sentinel-gateway \
-  --image=sentinel-gateway-public-v4 \
-  --image-project=sentinel-verification \
-  --machine-type=e2-small \
-  --tags=http-server,https-server \
-  --metadata-from-file=sentinel-env=gateway.env</pre>
-    </div>
-  </div>
-
-  <!-- ── STEP 3 ─────────────────────────────────────────────────────── -->
-  <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; background:var(--bg-dark); border-radius:6px;">
-    <h4 style="margin-top:0; color:var(--highlight);">🚀 Step 3 — Go Live</h4>
-    <ul style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
-      <li>Your gateway <strong>auto-starts</strong> within ~60 seconds of VM creation.</li>
-      <li>Test it:<br>
-        <pre style="background:#181a20; padding:0.75em 1em; border-radius:6px; overflow-x:auto; color:#00ffc8; margin:0.5em 0; font-size:0.9em; display:inline-block;">curl http://YOUR_VM_IP</pre><br>
-        Expected response: <code>HTTP 402 Payment Required</code> — that means it's working.</li>
-      <li>Point your domain's <strong>A record</strong> to the VM's external IP address.</li>
-      <li>SSL auto-configures via <strong>Let's Encrypt</strong> <span style="opacity:0.6;">(coming soon)</span>.</li>
-    </ul>
-  </div>
-
-  <!-- ── IMPORTANT NOTES ────────────────────────────────────────────── -->
-  <div style="border:1px solid var(--highlight); padding:1em; background:var(--bg-dark); border-radius:6px; border-left:4px solid var(--highlight);">
-    <h4 style="margin-top:0; color:var(--highlight);">💡 Important Notes</h4>
-    <ul style="padding-left:1.4em; margin-bottom:0; line-height:1.8;">
-      <li>The gateway blocks unauthorized AI scrapers with an <strong>HTTP 402 paywall</strong>.</li>
-      <li>Authorized requests pay <strong><code>$0.02 USDC</code></strong> per request on <strong>Base L2</strong>.</li>
-      <li><strong>Revenue split:</strong>
-        <ul style="padding-left:1.2em; margin:0.25em 0;">
-          <li><strong>60%</strong> to you (the business)</li>
-          <li><strong>20%</strong> to your referring agent (Hunter)</li>
-          <li><strong>16%</strong> to Sentinel Protocol</li>
-          <li><strong>4%</strong> to Parent Agent (referral network)</li>
-        </ul>
-      </li>
-      <li>No ongoing maintenance required — <strong>updates are automatic</strong>.</li>
-    </ul>
-  </div>
-</div>
-
 
 <div style="border:1px solid var(--border); padding:1em; margin-bottom:1em; margin-top: 20px; background:var(--panel-bg); color: var(--text-main); border-radius: 6px;">
 <h3 style="margin-top: 0; color: var(--highlight);">AI Agent Onboarding Checklist</h3>
@@ -438,13 +353,13 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 <code>https://github.com/sentinel-verification/sentinel-armory/blob/main/CONTRACT.md</code>
 </li>
 <li>V2 Contract on Basescan:<br>
-<code>https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF</code>
+<code>https://basescan.org/address/0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84</code>
 </li>
 <li>USDC Token on Base:<br>
 <code>https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913</code>
 </li>
 <li>Pricing: $0.02 USDC/request</li>
-<li>Revenue Split: 60% Business, 20% Hunter, 16% Protocol, 4% Parent Agent</li>
+<li>Revenue Split: 70% Business, 27.5% Sentinel Program, 2.5% Hunter</li>
 </ul>
 </div>
 
@@ -460,12 +375,10 @@ const COMPANY_ADDRESS = '0x21dFFAd5D2884DA68AD2e9BA866Bf6CA3A815604';
 
 const ABI = [
 "function createReferral(bytes32 referralId, address referrer, bytes signature) external",
-"function claimReferral(bytes32 referralId, address business, bytes signature) external",
-"function getReferral(bytes32 referralId) external view returns (tuple(address company, address referrer, address business, uint64 createdAt, uint64 claimedAt, uint8 status))"
+"function claimReferral(bytes32 referralId, address business, bytes signature) external"
 ];
 
 let provider, signer, userAddress, contract;
-let hunterWallet = null;
 
 const urlParams = new URLSearchParams(window.location.search);
 const referralIdFromUrl = urlParams.get('ref');
@@ -501,7 +414,7 @@ function onWalletConnected() {
 // --- MetaMask Connection ---
 async function connectWithMetaMask() {
     if (!window.ethereum) {
-        updateStatus('<span style="color: red;">&#9888; MetaMask is not installed!</span><br><small style="color: var(--text-main);">Please install the <a href="https://metamask.io/download/" target="_blank" style="color: var(--highlight);">MetaMask browser extension</a>, or use the Base / Coinbase Smart Wallet option to connect.</small>');
+        updateStatus('<span style="color: red;">&#9888; MetaMask is not installed!</span><br><small style="color: var(--text-main);">Please install the <a href="https://metamask.io/download/" target="_blank" style="color: var(--highlight);">MetaMask browser extension</a>, or use the Base / Coinbase Wallet option to connect a mobile wallet.</small>');
         return;
     }
     try {
@@ -566,7 +479,7 @@ appLogoUrl: 'https://base.org/logo.png',
 
 var cbProvider = sdk.getProvider();
 
-updateStatus('Requesting wallet connection &mdash; connecting via Coinbase Smart Wallet...');
+updateStatus('Requesting wallet connection &mdash; scan the QR code with your Base / Coinbase Wallet app...');
 
 // Request accounts - this triggers the connection modal
 var accounts = await cbProvider.request({ method: 'eth_requestAccounts' });
@@ -680,7 +593,7 @@ async function createReferral() {
         updateStatus(
             '<span style="color: green;">Success! Your On-Chain Referral Link:</span><br><br>' +
             '<a href="' + link + '" target="_blank" style="color: var(--highlight); font-size: 18px;">' + link + '</a><br><br>' +
-            '<span style="color: white; font-size: 12px;">Share this link with businesses. Your 20% royalty is cryptographically guaranteed.</span>'
+            '<span style="color: white; font-size: 12px;">Share this link with businesses. Your 2.5% royalty is cryptographically guaranteed.</span>'
         );
     } catch (error) {
         updateStatus('<span style="color: red;">Transaction failed: ' + (error.data && error.data.message ? error.data.message : error.message) + '</span>');
@@ -714,14 +627,6 @@ async function claimReferral() {
         var signature = await signer._signTypedData(domain, types, message);
         updateStatus('Signature secured! Please confirm the blockchain transaction in your wallet...');
 
-        // Read the hunter/referrer wallet from the on-chain referral record
-        try {
-            var referralData = await contract.getReferral(referralIdFromUrl);
-            hunterWallet = referralData.referrer;
-        } catch (readErr) {
-            console.warn('Could not read referral data (may not exist yet):', readErr.message);
-            hunterWallet = '0x0000000000000000000000000000000000000000';
-        }
         var tx = await contract.claimReferral(referralIdFromUrl, userAddress, signature);
         updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
 
@@ -742,42 +647,27 @@ function generateSecureString() {
 function downloadGateway() {
     var cachePassword = generateSecureString() + generateSecureString();
     var hmacSecret = generateSecureString() + generateSecureString();
-    var hunterAddr = hunterWallet || '0x_OPEN_CLAW_AGENT_WALLET_HERE';
 
     var envPayload = '# ============================================================\n';
-    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION\n';
+    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION (PATH B)\n';
     envPayload += '# ============================================================\n\n';
-    envPayload += '# 1. YOUR WALLET (Where your 60% business revenue gets sent)\n';
+    envPayload += '# 1. YOUR BUSINESS WALLET (Auto-injected from Web3 Claim)\n';
     envPayload += 'SENTINEL_BUSINESS_WALLET=' + userAddress + '\n\n';
-    envPayload += '# 2. REFERRAL WALLET (The Agent/Hunter who referred you - Do not change)\n';
-    envPayload += 'SENTINEL_HUNTER_WALLET=' + hunterAddr + '\n\n';
-    envPayload += '# 3. GLOBAL ROUTER (The SentinelDistributionV2 Smart Contract - Do not change)\n';
-    envPayload += 'SENTINEL_CONTRACT_ADDRESS=0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF\n\n';
-    envPayload += '# 3b. AGENT NETWORK REGISTRY (Tracks parent-child agent relationships - Do not change)\n';
-    envPayload += 'SENTINEL_AGENT_REGISTRY=0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF\n\n';
-    envPayload += '# 4. SECURITY & PRICING\n';
+    envPayload += '# 2. ON-CHAIN REFERRAL ID (Locked via Smart Contract)\n';
+    envPayload += 'SENTINEL_REFERRAL_ID=' + referralIdFromUrl + '\n\n';
+    envPayload += '# 3. GLOBAL ROUTER (The Sentinel Protocol Smart Contract)\n';
+    envPayload += 'SENTINEL_CONTRACT_ADDRESS=0xfDf6f1e617E4e0f4171f2c441BCE11707D3A7F84\n\n';
+    envPayload += '# 4. SECURITY & PRICING (Auto-generated for your server)\n';
+    envPayload += 'SENTINEL_PRICE_PER_REQUEST=0.02\n';
     envPayload += 'SENTINEL_CACHE_PASSWORD=' + cachePassword + '\n';
-    envPayload += 'SENTINEL_HMAC_SECRET=' + hmacSecret + '\n';
-    envPayload += 'SENTINEL_SETTLEMENT_AMOUNT=20000\n\n';
-    envPayload += '# 5. REFERRAL REGISTRY CONTRACT v2 - Smart-Wallet Compatible (Do not change)\n';
-    envPayload += 'SENTINEL_REFERRAL_CONTRACT=0x3591f64D970B360231b62d035b1ff4a9C69897e0\n\n';
-    envPayload += '# 6. BLOCKCHAIN RPC CONNECTION (Required for the Verifier to listen for payments)\n';
-    envPayload += '# NOTE: Replace YOUR_ALCHEMY_API_KEY with your free key from https://dashboard.alchemy.com\n';
-    envPayload += 'SENTINEL_RPC_URL=https://mainnet.base.org\n';
-    envPayload += 'SENTINEL_RPC_WSS_URL=wss://base-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_API_KEY\n\n';
-    envPayload += '# 7. BONUS FIELDS (Useful for debugging and integration)\n';
-    envPayload += 'SENTINEL_REFERRAL_ID=' + referralIdFromUrl + '\n';
-    envPayload += 'SENTINEL_CHAIN_ID=8453\n\n';
-    envPayload += '# --- DEPLOYMENT INSTRUCTIONS ---\n';
-    envPayload += '# 1. Save this file as .env\n';
-    envPayload += '# 2. IMPORTANT: Replace YOUR_ALCHEMY_API_KEY in SENTINEL_RPC_URL and SENTINEL_RPC_WSS_URL\n';
-    envPayload += '#    with your free Alchemy API key from https://dashboard.alchemy.com\n';
-    envPayload += '#    (The WebSocket URL is required for the payment verifier to work)\n';
-    envPayload += '# 3. Deploy via Google Cloud:\n';
-    envPayload += '#    - Create a VM from the public image: sentinel-gateway-public-v4\n';
-    envPayload += '#      (Project: sentinel-verification)\n';
-    envPayload += '#    - Add this file\'s contents as VM metadata with key: sentinel-env\n';
-    envPayload += '#    - The gateway starts automatically on boot\n';
+    envPayload += 'SENTINEL_HMAC_SECRET=' + hmacSecret + '\n\n';
+    envPayload += '# 5. NETWORK CONFIGURATION\n';
+    envPayload += 'SENTINEL_CHAIN_ID=8453\n';
+    envPayload += 'SENTINEL_RPC_URL=https://mainnet.base.org\n\n';
+    envPayload += '# --- INSTRUCTIONS ---\n';
+    envPayload += '# 1. Save this file as .env in your project root\n';
+    envPayload += '# 2. Run: docker pull sentinelverification/gateway:latest\n';
+    envPayload += '# 3. Run: docker run --env-file .env -p 8080:8080 sentinelverification/gateway:latest\n';
     envPayload += '# Full docs: https://github.com/sentinel-verification/sentinel-armory\n';
 
     var blob = new Blob([envPayload], { type: 'text/plain' });
