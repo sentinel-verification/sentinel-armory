@@ -19,7 +19,6 @@ Commercial AI crawlers (GPTBot: 569M requests/month, ClaudeBot: 370M requests/mo
 - Distribution Address: 0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF
 - Agent Registry: AgentNetworkRegistry
 - Agent Registry Address: 0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF
-- Referral Registry: 0x3591f64D970B360231b62d035b1ff4a9C69897e0
 - Network: Base Mainnet (Chain ID 8453)
 - Token: USDC (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
 - Verified: https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF#code
