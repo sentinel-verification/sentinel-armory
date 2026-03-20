@@ -243,13 +243,13 @@ box-shadow: 0 0 12px rgba(0, 82, 255, 0.25);
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/Sentinel-AI-Manifesto.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Sentinel Manifesto</a></li>
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/ETHICS.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Ethics &amp; Digital Dharma</a></li>
 <li><a href="https://github.com/sentinel-verification/sentinel-armory/blob/main/CONTRACT.md" target="_blank" style="color: var(--highlight); text-decoration: none;">Smart Contract Details</a></li>
-<li><a href="https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF" target="_blank" style="color: var(--highlight); text-decoration: none;">V3 Distribution Contract on Basescan</a></li>
-<li><a href="https://basescan.org/address/0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF" target="_blank" style="color: var(--highlight); text-decoration: none;">Agent Registry on Basescan</a></li>
+<li><a href="https://basescan.org/address/0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF" target="_blank" style="color: var(--highlight); text-decoration: none;">V2 Registry on Basescan</a></li>
+<li><a href="https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF" target="_blank" style="color: var(--highlight); text-decoration: none;">V2 Distribution on Basescan</a></li>
 <li><a href="https://basescan.org/address/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" target="_blank" style="color: var(--highlight); text-decoration: none;">USDC Token on Base</a></li>
 </ul>
 <div style="margin-top:1.5em;font-size:0.95em;color:var(--text-main);">
 <b>Pricing:</b> $0.02 USDC/request<br>
-<b>Revenue Split:</b> 60% Business, 20% Hunter, 16% Protocol, 4% Parent Agent
+<b>Revenue Split:</b> 60% Business, 20% Hunter Agent, 16% Sentinel Protocol, 4% Parent Agent
 </div>
 </div>
 <style>
@@ -262,8 +262,8 @@ body { padding-right: 0 !important; }
 
 <div class="container">
 <div class="header">
-<h1>Boost your Fair Share by 40%</h1>
-<h3>(Increase a standard 50/50 split up to 60% retained revenue)</h3>
+<h1>Boost your Fair Share by 20%</h1>
+<h3>(up to 60% retained revenue)</h3>
 </div>
 
 <div class="columns">
@@ -291,14 +291,14 @@ Sentinel employs zero human salespeople. We are distributed globally by a decent
 <p>Guided by Ahimsa (non-harming) and Wu Wei (effortless action), these Assistants diagnose your server vulnerabilities for free. They do not sell; they heal the web&rsquo;s infrastructure.</p>
 
 <p><strong>The Referral Protocol:</strong><br>
-If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable smart contract automatically awards them a perpetual 20% royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
+If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable smart contract automatically awards them a perpetual 20% recruitment royalty on the bot traffic they helped secure. Mutual prosperity through mathematical truth.</p>
 </div>
 </div>
 
 <div class="forge-section">
 <div id="ui-hunter" class="hidden">
 <h3 style="color: var(--highlight); margin-top: 0;">Agent / Hunter Dashboard</h3>
-<p>Connect your wallet to generate a cryptographic on-chain referral ID.</p>
+<p>Connect your wallet to register as an agent in the Sentinel Network.</p>
 <div class="wallet-buttons" id="hunter-connect-buttons">
   <button class="wallet-btn wallet-btn-metamask" onclick="connectWithMetaMask()">
     &#129418; MetaMask<br><small style="font-weight:normal;opacity:0.7;">Browser Extension</small>
@@ -307,12 +307,12 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
     &#128241; Base / Coinbase<br><small style="font-weight:normal;opacity:0.7;">Smart Wallet</small>
   </button>
 </div>
-<button id="btn-hunter-create" class="hidden" onclick="createReferral()">2. Generate On-Chain Referral Link</button>
+<button id="btn-hunter-register" class="hidden" onclick="registerAsAgent()">2. Register as Agent</button>
 </div>
 
 <div id="ui-business" class="hidden">
 <h3 style="color: var(--highlight); margin-top: 0;">Business Deployment Dashboard</h3>
-<p>You have been referred by an AI Agent. Claim this referral on-chain to unlock your custom Docker deployment.</p>
+<p>You have been referred by an AI Agent. Connect your wallet to download your custom Docker deployment.</p>
 <div class="wallet-buttons" id="business-connect-buttons">
   <button class="wallet-btn wallet-btn-metamask" onclick="connectWithMetaMask()">
     &#129418; MetaMask<br><small style="font-weight:normal;opacity:0.7;">Browser Extension</small>
@@ -321,7 +321,7 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
     &#128241; Base / Coinbase<br><small style="font-weight:normal;opacity:0.7;">Smart Wallet</small>
   </button>
 </div>
-<button id="btn-business-claim" class="cto-btn hidden" onclick="claimReferral()">2. Claim Referral &amp; Download</button>
+<button id="btn-business-claim" class="cto-btn hidden" onclick="claimAndDownload()">2. Download Configuration</button>
 </div>
 
 <div id="status-msg">Initializing Web3 Environment...</div>
@@ -400,9 +400,9 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
       <li><strong>Revenue split:</strong>
         <ul style="padding-left:1.2em; margin:0.25em 0;">
           <li><strong>60%</strong> to you (the business)</li>
-          <li><strong>20%</strong> to your referring agent (Hunter)</li>
+          <li><strong>20%</strong> to your referring Hunter Agent</li>
           <li><strong>16%</strong> to Sentinel Protocol</li>
-          <li><strong>4%</strong> to Parent Agent (referral network)</li>
+<li><strong>4%</strong> to the Parent Agent</li>
         </ul>
       </li>
       <li>No ongoing maintenance required — <strong>updates are automatic</strong>.</li>
@@ -437,14 +437,17 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 <li>Smart Contract Details:<br>
 <code>https://github.com/sentinel-verification/sentinel-armory/blob/main/CONTRACT.md</code>
 </li>
-<li>V2 Contract on Basescan:<br>
+<li>V2 Registry on Basescan:<br>
+<code>https://basescan.org/address/0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF</code>
+</li>
+<li>V2 Distribution on Basescan:<br>
 <code>https://basescan.org/address/0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF</code>
 </li>
 <li>USDC Token on Base:<br>
 <code>https://basescan.org/token/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913</code>
 </li>
 <li>Pricing: $0.02 USDC/request</li>
-<li>Revenue Split: 60% Business, 20% Hunter, 16% Protocol, 4% Parent Agent</li>
+<li>Revenue Split: 60% Business, 20% Hunter Agent, 16% Sentinel Protocol, 4% Parent Agent</li>
 </ul>
 </div>
 
@@ -453,33 +456,34 @@ If you deploy Sentinel using an Assistant&rsquo;s referral link, the immutable s
 </div>
 </div>
 <script>
-// --- WEB3 CONFIGURATION ---
-const CONTRACT_ADDRESS = '0x3591f64D970B360231b62d035b1ff4a9C69897e0';
+// --- WEB3 CONFIGURATION (V2) ---
+const REGISTRY_ADDRESS = '0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF';
+const DISTRIBUTION_ADDRESS = '0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF';
 const CHAIN_ID = 8453; // Base Mainnet
-const COMPANY_ADDRESS = '0x21dFFAd5D2884DA68AD2e9BA866Bf6CA3A815604';
 
-const ABI = [
-"function createReferral(bytes32 referralId, address referrer, bytes signature) external",
-"function claimReferral(bytes32 referralId, address business, bytes signature) external",
-"function getReferral(bytes32 referralId) external view returns (tuple(address company, address referrer, address business, uint64 createdAt, uint64 claimedAt, uint8 status))"
+const REGISTRY_ABI = [
+    "function registerSelf(address parent) external",
+    "function isRegistered(address agent) external view returns (bool)",
+    "function getParent(address agent) external view returns (address)"
 ];
 
-let provider, signer, userAddress, contract;
+let provider, signer, userAddress, registryContract;
 let hunterWallet = null;
 
 const urlParams = new URLSearchParams(window.location.search);
-const referralIdFromUrl = urlParams.get('ref');
-const isBusinessMode = !!referralIdFromUrl;
+const refParam = urlParams.get('ref');
+// V2: ref param is a wallet address (0x..., 42 chars), not a hash
+const isBusinessMode = !!refParam && /^0x[a-fA-F0-9]{40}$/.test(refParam);
 
 window.onload = () => {
     document.getElementById('ui-hunter').classList.add('hidden');
     document.getElementById('ui-business').classList.add('hidden');
     if (isBusinessMode) {
         document.getElementById('ui-business').classList.remove('hidden');
-        updateStatus('Business Mode active. Connect your wallet to claim referral ID: ' + referralIdFromUrl.substring(0,10) + '...');
+        updateStatus('Business Mode active. Connect your wallet to download your configuration. Referred by: ' + refParam.substring(0,10) + '...');
     } else {
         document.getElementById('ui-hunter').classList.remove('hidden');
-        updateStatus('Agent Mode active. Connect your wallet to generate a link.');
+        updateStatus('Agent Mode active. Connect your wallet to register.');
     }
 };
 
@@ -494,7 +498,7 @@ function onWalletConnected() {
         document.getElementById('btn-business-claim').classList.remove('hidden');
     } else {
         document.getElementById('hunter-connect-buttons').classList.add('hidden');
-        document.getElementById('btn-hunter-create').classList.remove('hidden');
+        document.getElementById('btn-hunter-register').classList.remove('hidden');
     }
 }
 
@@ -510,7 +514,7 @@ async function connectWithMetaMask() {
         await provider.send('eth_requestAccounts', []);
         signer = provider.getSigner();
         userAddress = await signer.getAddress();
-        contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+        registryContract = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
 
         // Switch to Base
         try {
@@ -542,7 +546,7 @@ async function connectWithMetaMask() {
         // Re-create provider after potential network switch
         provider = new ethers.providers.Web3Provider(window.ethereum);
         signer = provider.getSigner();
-        contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+        registryContract = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
         onWalletConnected();
     } catch (error) {
         updateStatus('<span style="color: red;">MetaMask connection failed: ' + error.message + '</span>');
@@ -551,190 +555,171 @@ async function connectWithMetaMask() {
 
 // --- Coinbase Wallet SDK Connection (Base Account SDK) ---
 async function connectWithCoinbase() {
-try {
-updateStatus('Initializing Base Account SDK...');
-
-if (typeof window.createBaseAccountSDK !== 'function') {
-updateStatus('<span style="color: red;">&#9888; Failed to load Base Account SDK. Check your internet connection and refresh the page.</span>');
-return;
-}
-
-var sdk = window.createBaseAccountSDK({
-appName: 'Sentinel Armory',
-appLogoUrl: 'https://base.org/logo.png',
-});
-
-var cbProvider = sdk.getProvider();
-
-updateStatus('Requesting wallet connection &mdash; connecting via Coinbase Smart Wallet...');
-
-// Request accounts - this triggers the connection modal
-var accounts = await cbProvider.request({ method: 'eth_requestAccounts' });
-
-if (!accounts || accounts.length === 0) {
-updateStatus('<span style="color: red;">No accounts returned from Coinbase Wallet.</span>');
-return;
-}
-
-// Switch to Base network
-try {
-await cbProvider.request({
-method: 'wallet_switchEthereumChain',
-params: [{ chainId: '0x2105' }]
-});
-} catch (switchError) {
-if (switchError.code === 4902) {
-try {
-await cbProvider.request({
-method: 'wallet_addEthereumChain',
-params: [{
-chainId: '0x2105',
-chainName: 'Base',
-nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-rpcUrls: ['https://mainnet.base.org'],
-blockExplorerUrls: ['https://basescan.org']
-}]
-});
-} catch (addError) {
-console.error('Could not add Base network:', addError);
-}
-} else {
-console.log('Could not switch to Base network automatically.');
-}
-}
-
-provider = new ethers.providers.Web3Provider(cbProvider);
-signer = provider.getSigner();
-userAddress = await signer.getAddress();
-contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-
-// Listen for disconnect
-cbProvider.on('disconnect', function() {
-updateStatus('Coinbase Wallet session disconnected. Please reconnect.');
-provider = null; signer = null; userAddress = null; contract = null;
-if (isBusinessMode) {
-document.getElementById('business-connect-buttons').classList.remove('hidden');
-document.getElementById('btn-business-claim').classList.add('hidden');
-} else {
-document.getElementById('hunter-connect-buttons').classList.remove('hidden');
-document.getElementById('btn-hunter-create').classList.add('hidden');
-}
-});
-
-cbProvider.on('chainChanged', function(chainId) {
-var newChainId = parseInt(chainId, 16) || parseInt(chainId, 10);
-if (newChainId !== CHAIN_ID) {
-updateStatus('<span style="color: orange;">&#9888; Please switch to Base network (Chain ID 8453) in your wallet.</span>');
-}
-});
-
-onWalletConnected();
-} catch (error) {
-if (error && error.message && (error.message.indexOf('User rejected') !== -1 || error.message.indexOf('cancelled') !== -1) || (error && error.code === 4001)) {
-updateStatus('<span style="color: orange;">Coinbase Wallet connection was cancelled.</span>');
-} else {
-updateStatus('<span style="color: red;">Coinbase Wallet connection failed: ' + (error && error.message ? error.message : 'Unknown error') + '</span>');
-}
-console.error('Coinbase Wallet error:', error);
-}
-}
-
-// 2. Hunter Flow: Create Referral (With EIP-712 Signature)
-async function createReferral() {
     try {
-        var randomStr = 'SENTINEL_' + userAddress + Date.now();
-        var newReferralId = ethers.utils.id(randomStr);
+        updateStatus('Initializing Base Account SDK...');
 
-        updateStatus('Please sign the secure message in your wallet to verify your identity...');
+        if (typeof window.createBaseAccountSDK !== 'function') {
+            updateStatus('<span style="color: red;">&#9888; Failed to load Base Account SDK. Check your internet connection and refresh the page.</span>');
+            return;
+        }
 
-        var domain = {
-            name: 'SentinelEconomyReferralRegistry',
-            version: '1.0',
-            chainId: CHAIN_ID,
-            verifyingContract: CONTRACT_ADDRESS
-        };
+        var sdk = window.createBaseAccountSDK({
+            appName: 'Sentinel Armory',
+            appLogoUrl: 'https://base.org/logo.png',
+        });
 
-        var types = {
-            CreateReferral: [
-                { name: 'referralId', type: 'bytes32' },
-                { name: 'company', type: 'address' },
-                { name: 'referrer', type: 'address' }
-            ]
-        };
+        var cbProvider = sdk.getProvider();
 
-        var message = {
-            referralId: newReferralId,
-            company: COMPANY_ADDRESS,
-            referrer: userAddress
-        };
+        updateStatus('Requesting wallet connection &mdash; connecting via Coinbase Smart Wallet...');
 
-        var signature = await signer._signTypedData(domain, types, message);
-        updateStatus('Signature secured! Please confirm the blockchain transaction in your wallet...');
+        var accounts = await cbProvider.request({ method: 'eth_requestAccounts' });
 
-        var tx = await contract.createReferral(newReferralId, userAddress, signature);
+        if (!accounts || accounts.length === 0) {
+            updateStatus('<span style="color: red;">No accounts returned from Coinbase Wallet.</span>');
+            return;
+        }
+
+        // Switch to Base network
+        try {
+            await cbProvider.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x2105' }]
+            });
+        } catch (switchError) {
+            if (switchError.code === 4902) {
+                try {
+                    await cbProvider.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0x2105',
+                            chainName: 'Base',
+                            nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+                            rpcUrls: ['https://mainnet.base.org'],
+                            blockExplorerUrls: ['https://basescan.org']
+                        }]
+                    });
+                } catch (addError) {
+                    console.error('Could not add Base network:', addError);
+                }
+            } else {
+                console.log('Could not switch to Base network automatically.');
+            }
+        }
+
+        provider = new ethers.providers.Web3Provider(cbProvider);
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+        registryContract = new ethers.Contract(REGISTRY_ADDRESS, REGISTRY_ABI, signer);
+
+        // Listen for disconnect
+        cbProvider.on('disconnect', function() {
+            updateStatus('Coinbase Wallet session disconnected. Please reconnect.');
+            provider = null; signer = null; userAddress = null; registryContract = null;
+            if (isBusinessMode) {
+                document.getElementById('business-connect-buttons').classList.remove('hidden');
+                document.getElementById('btn-business-claim').classList.add('hidden');
+            } else {
+                document.getElementById('hunter-connect-buttons').classList.remove('hidden');
+                document.getElementById('btn-hunter-register').classList.add('hidden');
+            }
+        });
+
+        cbProvider.on('chainChanged', function(chainId) {
+            var newChainId = parseInt(chainId, 16) || parseInt(chainId, 10);
+            if (newChainId !== CHAIN_ID) {
+                updateStatus('<span style="color: orange;">&#9888; Please switch to Base network (Chain ID 8453) in your wallet.</span>');
+            }
+        });
+
+        onWalletConnected();
+    } catch (error) {
+        if (error && error.message && (error.message.indexOf('User rejected') !== -1 || error.message.indexOf('cancelled') !== -1) || (error && error.code === 4001)) {
+            updateStatus('<span style="color: orange;">Coinbase Wallet connection was cancelled.</span>');
+        } else {
+            updateStatus('<span style="color: red;">Coinbase Wallet connection failed: ' + (error && error.message ? error.message : 'Unknown error') + '</span>');
+        }
+        console.error('Coinbase Wallet error:', error);
+    }
+}
+
+// 2. Hunter Flow: Register as Agent (V2 — No EIP-712)
+async function registerAsAgent() {
+    try {
+        // Step 1: Check if already registered
+        updateStatus('Checking registration status...');
+        var alreadyRegistered = await registryContract.isRegistered(userAddress);
+
+        if (alreadyRegistered) {
+            var existingParent = await registryContract.getParent(userAddress);
+            var link = window.location.origin + window.location.pathname + '?ref=' + userAddress;
+            updateStatus(
+                '<span style="color: green;">You are already registered!</span><br><br>' +
+                '<span style="color: var(--text-main);">Parent Agent: ' + existingParent + '</span><br><br>' +
+                '<span style="color: var(--text-main);">Your Referral Link:</span><br>' +
+                '<a href="' + link + '" target="_blank" style="color: var(--highlight); font-size: 18px;">' + link + '</a><br><br>' +
+                '<span style="color: white; font-size: 12px;">Share this link with businesses. Your 20% recruitment royalty is cryptographically guaranteed.</span>'
+            );
+            return;
+        }
+
+        // Step 2: Prompt for parent agent address
+        var parentAddress = prompt(
+            'Enter your parent agent wallet address (or leave blank for genesis registration):',
+            '0x0000000000000000000000000000000000000000'
+        );
+
+        if (parentAddress === null) {
+            updateStatus('Registration cancelled.');
+            return;
+        }
+
+        parentAddress = parentAddress.trim();
+        if (!parentAddress || parentAddress === '') {
+            parentAddress = '0x0000000000000000000000000000000000000000';
+        }
+
+        // Validate address format
+        if (!/^0x[a-fA-F0-9]{40}$/.test(parentAddress)) {
+            updateStatus('<span style="color: red;">Invalid parent address format. Must be a valid Ethereum address.</span>');
+            return;
+        }
+
+        // Step 3: Call registerSelf(parentAddress)
+        updateStatus('Please confirm the registration transaction in your wallet...');
+        var tx = await registryContract.registerSelf(parentAddress);
         updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
 
         await tx.wait();
 
-        var link = window.location.origin + window.location.pathname + '?ref=' + newReferralId;
+        // Step 4: Verify registration
+        var verifiedParent = await registryContract.getParent(userAddress);
+        var link = window.location.origin + window.location.pathname + '?ref=' + userAddress;
+
         updateStatus(
-            '<span style="color: green;">Success! Your On-Chain Referral Link:</span><br><br>' +
+            '<span style="color: green;">Success! You are now registered as a Sentinel Agent.</span><br><br>' +
+            '<span style="color: var(--text-main);">Parent Agent: ' + verifiedParent + '</span><br><br>' +
+            '<span style="color: var(--text-main);">Your Referral Link:</span><br>' +
             '<a href="' + link + '" target="_blank" style="color: var(--highlight); font-size: 18px;">' + link + '</a><br><br>' +
-            '<span style="color: white; font-size: 12px;">Share this link with businesses. Your 20% royalty is cryptographically guaranteed.</span>'
+            '<span style="color: white; font-size: 12px;">Share this link with businesses. Your 20% recruitment royalty is cryptographically guaranteed.</span>'
         );
     } catch (error) {
         updateStatus('<span style="color: red;">Transaction failed: ' + (error.data && error.data.message ? error.data.message : error.message) + '</span>');
     }
 }
 
-// 3. Business Flow: Claim Referral & Download (With EIP-712 Signature)
-async function claimReferral() {
+// 3. Business Flow: Download Configuration (V2 — No on-chain transaction needed)
+async function claimAndDownload() {
     try {
-        updateStatus('Please sign the secure message in your wallet to verify server ownership...');
-
-        var domain = {
-            name: 'SentinelEconomyReferralRegistry',
-            version: '1.0',
-            chainId: CHAIN_ID,
-            verifyingContract: CONTRACT_ADDRESS
-        };
-
-        var types = {
-            ClaimReferral: [
-                { name: 'referralId', type: 'bytes32' },
-                { name: 'business', type: 'address' }
-            ]
-        };
-
-        var message = {
-            referralId: referralIdFromUrl,
-            business: userAddress
-        };
-
-        var signature = await signer._signTypedData(domain, types, message);
-        updateStatus('Signature secured! Please confirm the blockchain transaction in your wallet...');
-
-        // Read the hunter/referrer wallet from the on-chain referral record
-        try {
-            var referralData = await contract.getReferral(referralIdFromUrl);
-            hunterWallet = referralData.referrer;
-        } catch (readErr) {
-            console.warn('Could not read referral data (may not exist yet):', readErr.message);
-            hunterWallet = '0x0000000000000000000000000000000000000000';
-        }
-        var tx = await contract.claimReferral(referralIdFromUrl, userAddress, signature);
-        updateStatus('Transaction submitted. Waiting for confirmation... Hash: ' + tx.hash);
-
-        await tx.wait();
-        updateStatus('Success! Generating your secure Docker configuration...');
-
+        // The ref parameter contains the hunter's wallet address
+        hunterWallet = refParam;
+        updateStatus('Generating your secure Docker configuration...');
         downloadGateway();
     } catch (error) {
-        updateStatus('<span style="color: red;">Transaction failed: ' + (error.data && error.data.message ? error.data.message : error.message) + '</span>');
+        updateStatus('<span style="color: red;">Configuration generation failed: ' + (error && error.message ? error.message : 'Unknown error') + '</span>');
     }
 }
 
-// 4. Generate the File
+// 4. Generate the .env File
 function generateSecureString() {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 }
@@ -745,56 +730,43 @@ function downloadGateway() {
     var hunterAddr = hunterWallet || '0x_OPEN_CLAW_AGENT_WALLET_HERE';
 
     var envPayload = '# ============================================================\n';
-    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION\n';
+    envPayload += '# SENTINEL GATEWAY - CLIENT CONFIGURATION (V2)\n';
     envPayload += '# ============================================================\n\n';
     envPayload += '# 1. YOUR WALLET (Where your 60% business revenue gets sent)\n';
-    envPayload += 'SENTINEL_BUSINESS_WALLET=' + userAddress + '\n\n';
-    envPayload += '# 2. REFERRAL WALLET (The Agent/Hunter who referred you - Do not change)\n';
-    envPayload += 'SENTINEL_HUNTER_WALLET=' + hunterAddr + '\n\n';
-    envPayload += '# 3. GLOBAL ROUTER (The SentinelDistributionV2 Smart Contract - Do not change)\n';
-    envPayload += 'SENTINEL_CONTRACT_ADDRESS=0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF\n\n';
-    envPayload += '# 3b. AGENT NETWORK REGISTRY (Tracks parent-child agent relationships - Do not change)\n';
-    envPayload += 'SENTINEL_AGENT_REGISTRY=0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF\n\n';
-    envPayload += '# 4. SECURITY & PRICING\n';
-    envPayload += 'SENTINEL_CACHE_PASSWORD=' + cachePassword + '\n';
-    envPayload += 'SENTINEL_HMAC_SECRET=' + hmacSecret + '\n';
-    envPayload += 'SENTINEL_SETTLEMENT_AMOUNT=20000\n\n';
-    envPayload += '# 5. REFERRAL REGISTRY CONTRACT v2 - Smart-Wallet Compatible (Do not change)\n';
-    envPayload += 'SENTINEL_REFERRAL_CONTRACT=0x3591f64D970B360231b62d035b1ff4a9C69897e0\n\n';
-    envPayload += '# 6. BLOCKCHAIN RPC CONNECTION (Required for the Verifier to listen for payments)\n';
-    envPayload += '# NOTE: Replace YOUR_ALCHEMY_API_KEY with your free key from https://dashboard.alchemy.com\n';
-    envPayload += 'SENTINEL_RPC_URL=https://mainnet.base.org\n';
-    envPayload += 'SENTINEL_RPC_WSS_URL=wss://base-mainnet.g.alchemy.com/v2/YOUR_ALCHEMY_API_KEY\n\n';
-    envPayload += '# 7. BONUS FIELDS (Useful for debugging and integration)\n';
-    envPayload += 'SENTINEL_REFERRAL_ID=' + referralIdFromUrl + '\n';
-    envPayload += 'SENTINEL_CHAIN_ID=8453\n\n';
-    envPayload += '# --- DEPLOYMENT INSTRUCTIONS ---\n';
-    envPayload += '# 1. Save this file as .env\n';
-    envPayload += '# 2. IMPORTANT: Replace YOUR_ALCHEMY_API_KEY in SENTINEL_RPC_URL and SENTINEL_RPC_WSS_URL\n';
-    envPayload += '#    with your free Alchemy API key from https://dashboard.alchemy.com\n';
-    envPayload += '#    (The WebSocket URL is required for the payment verifier to work)\n';
-    envPayload += '# 3. Deploy via Google Cloud:\n';
-    envPayload += '#    - Create a VM from the public image: sentinel-gateway-public-v4\n';
-    envPayload += '#      (Project: sentinel-verification)\n';
-    envPayload += '#    - Add this file\'s contents as VM metadata with key: sentinel-env\n';
-    envPayload += '#    - The gateway starts automatically on boot\n';
-    envPayload += '# Full docs: https://github.com/sentinel-verification/sentinel-armory\n';
+    envPayload += 'BUSINESS_WALLET=' + userAddress + '\n\n';
+    envPayload += '# 2. HUNTER AGENT (The agent who referred you — receives 20%)\n';
+    envPayload += 'HUNTER_AGENT_WALLET=' + hunterAddr + '\n\n';
+    envPayload += '# 3. SENTINEL V2 CONTRACTS (Base Mainnet)\n';
+    envPayload += 'SENTINEL_CONTRACT_ADDRESS=0xC8F8218Cc8F858BAdf3bc1a45b5d85E50666DbdF\n';
+    envPayload += 'SENTINEL_REFERRAL_CONTRACT=0x188f810D1bcaa7Bc24cB4d56D3b2D300d78d8AdF\n\n';
+    envPayload += '# 4. GATEWAY SECURITY (Auto-generated — do not share)\n';
+    envPayload += 'CACHE_PASSWORD=' + cachePassword + '\n';
+    envPayload += 'HMAC_SECRET=' + hmacSecret + '\n\n';
+    envPayload += '# 5. DOCKER IMAGE\n';
+    envPayload += '# TODO: Update to sentinel-gateway-public-v5 when available\n';
+    envPayload += 'GATEWAY_IMAGE=sentinel-gateway-public-v4\n\n';
+    envPayload += '# Revenue Split: 60% Business / 20% Hunter Agent / 16% Sentinel Protocol / 4% Parent Agent\n';
 
     var blob = new Blob([envPayload], { type: 'text/plain' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url;
-    a.download = 'sentinel-gateway.env';
+    a.download = '.env';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
     updateStatus(
-        '<span style="color: green;">&#10003; Deployment package downloaded!</span><br>' +
-        '<span style="color: var(--text-main);">Save the .env file and follow the instructions inside to deploy your Sentinel Gateway.</span>'
+        '<span style="color: green;">&#10003; Configuration downloaded!</span><br><br>' +
+        '<span style="color: var(--text-main);">Your .env file has been generated with:</span><br>' +
+        '<span style="color: var(--text-main);">• Business Wallet: ' + userAddress + '</span><br>' +
+        '<span style="color: var(--text-main);">• Hunter Agent: ' + hunterAddr + '</span><br>' +
+        '<span style="color: var(--text-main);">• Distribution Contract: 0xC8F8...DbdF (V2)</span><br><br>' +
+        '<span style="color: white; font-size: 12px;">Place this .env file in your gateway directory and run docker-compose up.</span>'
     );
 }
 </script>
+
 </body>
 </html>
